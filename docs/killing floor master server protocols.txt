@@ -1,6 +1,5 @@
 KILLING FLOOR BROWSER
 ---------------------
-
 REQUEST (69.28.158.131:27011)
 Message Type: 31
 Region Code: ff

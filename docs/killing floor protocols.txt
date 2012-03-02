@@ -1,15 +1,116 @@
-REQUEST
-To port 7708
-Data: 80:00:00:00:00
 
 REQUEST
-To port: 27014
-Header: FF:FF:FF:FF
-Request: 54:53:6f:75:72:63:65:20:45:6e:67:69:6e:65:20:51:75:65:72:79:00
-TSource Engine Query
+Header (long):
+    ff:ff:ff:ff (Normal Packet)
+    ff:ff:ff:f2 (Split Packet)
+Type (byte):
+    69 (A2A_PING request)
+    6A (A2A_PING response)
+    54 (A2A_INFO request)
+    49 (A2A_INFO response)
+    57 (A2S_SERVERQUERY_GETCHALLENGE request)
+    49 (A2S_SERVERQUERY_GETCHALLENGE response)
+    55 (A2S_PLAYER request)
+    44 (A2S_PLAYER response)
+    56 (A2S_RULES request)
+    45 (A2S_RULES response)
+    
+Content (A2A_INFO request):
+    Request (string):
+        53:6f:75:72:63:65:20:45:6e:67:69:6e:65:20:51:75:65:72:79:00
+        Source Engine Query
+    
+Content (A2A_INFO response):
+    Version (byte):
+        07
+        11
+    Server Name (string)
+    Map (string)
+    Game Directory (string)
+    Game Description (string)
+    AppID (short)
+    NumberOfPlayers (byte)
+    MaximumPlayers (byte)
+    NumberOfBots (byte)
+    Dedicated (byte)
+        'l' Listen
+        'd' Dedicated
+        'p' SourceTV
+    OS (byte)
+        'l' Linux
+        'w' Windows
+    Password (byte)
+        0x00    No Password
+        0x01    Password
+    Secure (byte)
+        0x00    No VAC
+        0x01    VAC Secured
+    Game Version (string)
+    Extra Data Flag (byte)  Lists extra data included
+        0x80    Server's Game Port
+        0x10    Server's SteamID
+        0x40    Spectator Server Port and Name
+        0x20    Game tag data string
+        0x01    Server's GameID
+    Server's Game Port (byte)
+    Server's SteamID (long, long)
+    Spectator Server Port and Name (short, string)
+    Game tag data string (string)
+    Server's GameID (long, long)
+    
+REQUEST (28856)
+Header:
+    ff:ff:ff:ff
+Type
+    54
+Request:
+    53:6f:75:72:63:65:20:45:6e:67:69:6e:65:20:51:75:65:72:79:00
+    TSource Engine Query
 
 RESPONSE
-
-ff:ff:ff:ff
-
+Header:
+    ff:ff:ff:ff
+Type:
+    49 (A2A_INFO Response)
+Version:
+    07
+Server Name (string)
+    53:6c:75:67:53:6f:75:72:63:65:00
+Map (string)
+    4b:46:2d:45:76:69:6c:53:61:6e:74:61:73:4c:61:69:72:00
+Game Directory (string)
+    6b:69:6c:6c:69:6e:67:66:6c:6f:6f:72:00
+Game Description (string)
+    4b:69:6c:6c:69:6e:67:20:46:6c:6f:6f:72:00
+AppID (short)
+    e2:04
+NumberOfPlayers (byte)
+    00
+MaximumPlayers (byte)
+    06
+NumberOfBots (byte)
+    00
+Dedicated (byte)
+    64
+OS (byte)
+    77
+Password (byte)
+    00
+Secure (byte)
+    01    
+Game Version (string)
+    31:2e:30:2e:33:2e:32:00
+Extra Data Flag (byte) 
+    f1
+Server's Game Port (byte)
+    1b
+Server's SteamID (long, long)
+    1e:01:78:5e:49:49:0b:40
+Spectator Server Port and Name (short, string)
+    01:1b
+    1e:53:6c:75:67:53:6f:75:72:63:65:00
+Game Tag Data String (string)
+    64:3b:31:3b:31:00
+Server's GameID (long, long)
+    e2:04:00:00:00:00:00:00
 
