@@ -24,8 +24,10 @@ public class BrowserTest
     {
         try
         {
+            System.out.println("External\n--------");                    
             sendRequest(InetAddress.getByName("216.246.108.212"), 28952);
-            sendRequest(InetAddress.getByName("192.168.0.200"), 28852);
+            System.out.println("\nInternal\n--------");
+            sendRequest(InetAddress.getByName("localhost"), 28852);
         } catch (Exception ex)
         {
             ex.printStackTrace();
@@ -203,6 +205,16 @@ public class BrowserTest
             System.out.println("Spectator Server Name: " + spectatorServerName);
         }
 
+        // d;#;#
+        // d; ?
+        // #; ?
+        // # Difficulty?
+        //  - Unrecognized Difficulty
+        //  0 Easy
+        //  1 Normal
+        //  2 Hard
+        //  3 Suicidal
+        //  4 Hell on Earth
         String gameTagDataString;
         if (hasGameTagDataString)
         {
