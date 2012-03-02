@@ -1,0 +1,15 @@
+REQUEST
+To port 7708
+Data: 80:00:00:00:00
+
+REQUEST
+To port: 27014
+Header: FF:FF:FF:FF
+Request: 54:53:6f:75:72:63:65:20:45:6e:67:69:6e:65:20:51:75:65:72:79:00
+TSource Engine Query
+
+RESPONSE
+
+ff:ff:ff:ff
+
+
