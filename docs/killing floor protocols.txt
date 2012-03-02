@@ -56,6 +56,16 @@ Content (A2A_INFO response):
     Server's SteamID (long, long)
     Spectator Server Port and Name (short, string)
     Game tag data string (string)
+        "d;#;#"
+        d; ?
+        #; ?
+        # Difficulty
+            - Unrecognized Difficulty
+            0 Easy
+            1 Normal
+            2 Hard
+            3 Suicidal
+            4 Hell on Earth
     Server's GameID (long, long)
     
 REQUEST (28856)
