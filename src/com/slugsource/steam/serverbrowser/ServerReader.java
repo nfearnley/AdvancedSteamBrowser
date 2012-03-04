@@ -10,20 +10,26 @@ package com.slugsource.steam.serverbrowser;
  */
 public class ServerReader
 {
+
     int index;
     byte[] data;
-    
+
     public ServerReader()
     {
-        
     }
-    
-    public Server readServer(byte[] rawdata)
+
+    public Server readServer(byte[] rawdata) throws NotAServerException
     {
         this.index = 0;
         this.data = rawdata;
         Server server = new Server();
-        
+
+        int prefix = readLong();
+        if (prefix != 0xFFFFFFFF)
+        {
+            throw new NotAServerException("Prefix does not match.");
+        }
+
         server.setType(readByte());
         server.setVersion(readByte());
         server.setServerName(readString());
@@ -39,41 +45,41 @@ public class ServerReader
         server.setPassword(readBoolean());
         server.setVacSecured(readBoolean());
         server.setGameVersion(readString());
-        
+
         int extraDataFlag = readByte();
         server.setHasGamePort((extraDataFlag & 0x80) != 0);
         server.setHasSteamId((extraDataFlag & 0x10) != 0);
         server.setHasSpectatorServer((extraDataFlag & 0x40) != 0);
         server.setHasGameTagDataString((extraDataFlag & 0x20) != 0);
         server.setHasGameId((extraDataFlag & 0x01) != 0);
-        
+
         if (server.hasGamePort())
         {
             server.setGamePort(readByte());
         }
-        
+
         if (server.hasSteamId())
         {
             server.setSteamId(readLongLong());
         }
-        
+
         if (server.hasSpectatorServer())
         {
             server.setSpectatorServerPort(readShort());
             server.setSpectatorServerName(readString());
         }
-        
+
         if (server.hasGameTagDataString())
         {
             server.setGameTagDataString(readString());
             server.setDifficulty(server.getGameTagDataString().charAt(4));
         }
-        
+
         if (server.hasGameId())
         {
             server.setGameId(readLongLong());
         }
-        
+
         return server;
     }
 
@@ -85,7 +91,7 @@ public class ServerReader
     }
 
     private char readChar()
-    {   
+    {
         char result = (char) data[index];
         index += 1;
         return result;
@@ -93,7 +99,7 @@ public class ServerReader
 
     private String readString()
     {
-        
+
         int count = 0;
         while (data[index + count] != 00)
         {
@@ -103,7 +109,7 @@ public class ServerReader
                 throw new IndexOutOfBoundsException();
             }
         }
-        
+
         String result = new String(data, index, count);
         index += count + 1;
         return result;
@@ -132,6 +138,7 @@ public class ServerReader
         return result;
     }
 
+    // Fix support for real unsigned 64-bit integers
     private long readLongLong()
     {
         long result = (long) readByte()
