@@ -418,7 +418,7 @@ public class Server
         
         if (hasGameId)
         {
-            output += ("Game ID: " + gameId + "\n");
+            output += ("Game ID: " + gameId);
         }
 
         return output;
