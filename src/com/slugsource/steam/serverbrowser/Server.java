@@ -45,7 +45,7 @@ public class Server
     //  3 Suicidal
     //  4 Hell on Earth
     private String gameTagDataString;
-    private int difficulty;
+    private char difficulty;
     private long gameId;
 
     public Server()
@@ -73,12 +73,12 @@ public class Server
         this.dedicated = dedicated;
     }
 
-    public int getDifficulty()
+    public char getDifficulty()
     {
         return difficulty;
     }
 
-    public void setDifficulty(int difficulty)
+    public void setDifficulty(char difficulty)
     {
         this.difficulty = difficulty;
     }
@@ -143,7 +143,7 @@ public class Server
         this.gameVersion = gameVersion;
     }
 
-    public boolean isHasGameId()
+    public boolean hasGameId()
     {
         return hasGameId;
     }
@@ -153,7 +153,7 @@ public class Server
         this.hasGameId = hasGameId;
     }
 
-    public boolean isHasGamePort()
+    public boolean hasGamePort()
     {
         return hasGamePort;
     }
@@ -163,7 +163,7 @@ public class Server
         this.hasGamePort = hasGamePort;
     }
 
-    public boolean isHasGameTagDataString()
+    public boolean hasGameTagDataString()
     {
         return hasGameTagDataString;
     }
@@ -173,7 +173,7 @@ public class Server
         this.hasGameTagDataString = hasGameTagDataString;
     }
 
-    public boolean isHasSpectatorServer()
+    public boolean hasSpectatorServer()
     {
         return hasSpectatorServer;
     }
@@ -183,7 +183,7 @@ public class Server
         this.hasSpectatorServer = hasSpectatorServer;
     }
 
-    public boolean isHasSteamId()
+    public boolean hasSteamId()
     {
         return hasSteamId;
     }
