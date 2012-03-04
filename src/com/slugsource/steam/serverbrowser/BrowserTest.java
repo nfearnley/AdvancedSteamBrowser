@@ -5,8 +5,9 @@
 package com.slugsource.steam.serverbrowser;
 
 import java.io.IOException;
-import java.net.*;
-import org.apache.commons.lang3.ArrayUtils;
+import java.net.InetAddress;
+import java.net.SocketTimeoutException;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -18,58 +19,33 @@ public class BrowserTest
     public static void main(String[] args)
     {
         try
-        {             
+        {
             sendRequest(InetAddress.getByName("216.246.108.212"), 28952);
             sendRequest(InetAddress.getByName("localhost"), 28852);
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
             ex.printStackTrace();
-            return;
         }
     }
 
-    private static void sendRequest(InetAddress address, int port) throws SocketException, IOException
+    private static void sendRequest(InetAddress address, int port) throws IOException
     {
-        DatagramSocket datagramSocket = new DatagramSocket();
-        datagramSocket.setSoTimeout(1000);
-
-        byte[] prefix =
-        {
-            (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0x54
-        };
-
-        byte suffix = 0x00;
-
-        byte[] sendBuffer = ArrayUtils.addAll(prefix, "Source Engine Query".getBytes());
-        sendBuffer = ArrayUtils.addAll(sendBuffer, suffix);
-
-        DatagramPacket packet = new DatagramPacket(
-                sendBuffer, sendBuffer.length, address, port);
-
-        datagramSocket.send(packet);
-
-        byte[] receiveBuffer = new byte[1024];
-        DatagramPacket receivePacket = new DatagramPacket(receiveBuffer, 1024);
         try
         {
-            System.out.println("\nServer " + address.getHostAddress() + ":" + port);
-            datagramSocket.receive(receivePacket);
-            ServerReader sReader = new ServerReader();
-            Server myServer = sReader.readServer(receivePacket.getData());
-            System.out.println(myServer);
-            
+            String header = "Server " + address.getHostAddress() + ":" + port;
+            header += '\n' + StringUtils.repeat('-', header.length());
+            System.out.println(header);
+            Server external = ServerBrowser.getServerInfo(address, port);
+            System.out.println(external);
         } catch (SocketTimeoutException ex)
         {
             System.out.println("Could not contact server");
-        }
-        catch (NotAServerException ex)
+        } catch (NotAServerException ex)
         {
             System.out.println("Response was not a server description");
-        }
-        finally
+        } finally
         {
-            datagramSocket.close();
+            System.out.println();
         }
     }
 }
