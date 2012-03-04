@@ -38,19 +38,18 @@ public class Server
     // d; ?
     // #; ?
     // # Difficulty?
+    private String gameTagDataString;
     //  - Unrecognized Difficulty
     //  0 Easy
     //  1 Normal
     //  2 Hard
     //  3 Suicidal
     //  4 Hell on Earth
-    private String gameTagDataString;
     private char difficulty;
     private long gameId;
 
     public Server()
     {
-        
     }
 
     public int getAppId()
@@ -322,111 +321,104 @@ public class Server
     {
         this.version = version;
     }
-    
+
     @Override
     public String toString()
     {
         String output = "";
-        output += ("Type: " + Integer.toHexString(type));
-        output += ("Version: " + version);
-        output += ("Server Name: " + serverName);
-        output += ("Map: " + map);
-        output += ("Game Directory: " + gameDirectory);
-        output += ("Game Description: " + gameDescription);
-        output += ("App ID: " + appId);
-        output += ("Number of Players: " + numberOfPlayers);
-        output += ("Maximum Players: " + maximumPlayers);
-        output += ("Number of Bots: " + numberOfBots);
+        output += ("Type: " + Integer.toHexString(type) + "\n");
+        output += ("Version: " + version + "\n");
+        output += ("Server Name: " + serverName + "\n");
+        output += ("Map: " + map + "\n");
+        output += ("Game Directory: " + gameDirectory + "\n");
+        output += ("Game Description: " + gameDescription + "\n");
+        output += ("App ID: " + appId + "\n");
+        output += ("Number of Players: " + numberOfPlayers + "\n");
+        output += ("Maximum Players: " + maximumPlayers + "\n");
+        output += ("Number of Bots: " + numberOfBots + "\n");
+        output += "Dedicated: ";
         switch (dedicated)
         {
             case 'l':
-                output += ("Dedicated: Listen");
+                output += ("Listen");
                 break;
             case 'd':
-                output += ("Dedicated: Dedicated");
+                output += ("Dedicated");
                 break;
             case 'p':
-                output += ("Dedicated: SourceTV");
+                output += ("SourceTV");
                 break;
             default:
-                output += ("Dedicated: Unknown");
+                output += ("Unknown");
         }
+        output += "\n";
+        output += "Operating System: ";
         switch (operatingSystem)
         {
             case 'l':
-                output += ("Operating System: Linux");
+                output += ("Linux");
                 break;
             case 'w':
-                output += ("Operating System: Windows");
+                output += ("Windows");
                 break;
             default:
-                output += ("Operating System: Unknown");
+                output += ("Unknown");
         }
-        output += ((password ? "" : "No ") + "Password");
-        output += ((vacSecured ? "" : "Not ") + "VAC Secured");
-        output += ("Game Version: " + gameVersion);
-        output += ("Has Game Port: " + hasGamePort);
-        output += ("Has Steam ID: " + hasSteamId);
-        output += ("Has Spectator Server: " + hasSpectatorServer);
-        output += ("Has Game Tag Data String: " + hasGameTagDataString);
-        output += ("Has Game ID: " + hasGameId);
+        output += "\n";
+        output += ((password ? "" : "No ") + "Password\n");
+        output += ((vacSecured ? "" : "Not ") + "VAC Secured\n");
+        output += ("Game Version: " + gameVersion + "\n");
+        output += ("Has Game Port: " + hasGamePort + "\n");
+        output += ("Has Steam ID: " + hasSteamId + "\n");
+        output += ("Has Spectator Server: " + hasSpectatorServer + "\n");
+        output += ("Has Game Tag Data String: " + hasGameTagDataString + "\n");
+        output += ("Has Game ID: " + hasGameId + "\n");
         if (hasGamePort)
         {
-            output += ("Game Port: " + gamePort);
+            output += ("Game Port: " + gamePort + "\n");
         }
 
         if (hasSteamId)
         {
-            output += ("Steam ID: " + steamId);
+            output += ("Steam ID: " + steamId + "\n");
         }
 
         if (hasSpectatorServer)
         {
-            output += ("Spectator Server Port: " + spectatorServerPort);
-            output += ("Spectator Server Name: " + spectatorServerName);
+            output += ("Spectator Server Port: " + spectatorServerPort + "\n");
+            output += ("Spectator Server Name: " + spectatorServerName + "\n");
         }
-
-        // d;#;#
-        // d; ?
-        // #; ?
-        // # Difficulty?
-        //  - Unrecognized Difficulty
-        //  0 Easy
-        //  1 Normal
-        //  2 Hard
-        //  3 Suicidal
-        //  4 Hell on Earth
+        
         if (hasGameTagDataString)
         {
-            output += ("Game Tag Data String: " + gameTagDataString);
-            
-            switch (operatingSystem)
+            output += ("Game Tag Data String: " + gameTagDataString + "\n");
+            output += "Difficulty: ";
+            switch (difficulty)
             {
                 case '0':
-                    output += ("Difficulty: Easy");
+                    output += ("Easy");
                     break;
                 case '1':
-                    output += ("Difficulty: Normal");
+                    output += ("Normal");
                     break;
                 case '2':
-                    output += ("Difficulty: Hard");
+                    output += ("Hard");
                     break;
                 case '3':
-                    output += ("Difficulty: Suicidal");
+                    output += ("Suicidal");
                     break;
                 case '4':
-                    output += ("Difficulty: Hell on Earth");
+                    output += ("Hell on Earth");
                     break;
                 default:
-                    output += ("Difficulty: Unknown");
+                    output += ("Unknown");
             }
+            output += "\n";
         }
-
-        // TODO: Fix to support unsigned 64 bit numbers
+        
         if (hasGameId)
         {
-            output += ("Game ID: " + gameId);
-
+            output += ("Game ID: " + gameId + "\n");
         }
 
         return output;
