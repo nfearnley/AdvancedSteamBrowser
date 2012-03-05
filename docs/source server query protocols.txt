@@ -1,5 +1,9 @@
+===================
+Source Server Query
+===================
 
 REQUEST
+-------
 Header (long):
     ff:ff:ff:ff (Normal Packet)
     ff:ff:ff:f2 (Split Packet)
@@ -69,6 +73,7 @@ Content (A2A_INFO response):
     Server's GameID (long, long)
     
 REQUEST (28856)
+---------------
 Header:
     ff:ff:ff:ff
 Type
@@ -78,6 +83,7 @@ Request:
     TSource Engine Query
 
 RESPONSE
+--------
 Header:
     ff:ff:ff:ff
 Type:
@@ -123,4 +129,3 @@ Game Tag Data String (string)
     64:3b:31:3b:31:00
 Server's GameID (long, long)
     e2:04:00:00:00:00:00:00
-

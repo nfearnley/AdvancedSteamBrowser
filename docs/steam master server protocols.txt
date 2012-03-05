@@ -1,6 +1,9 @@
-STEAM BROWSER
--------------
+=============================
+Steam Master Server Protocols
+=============================
+
 REQUEST (69.28.158.131:27014)
+-----------------------------
 Message Type: 31
 Region Code: ff
 IP:Port:
@@ -11,11 +14,13 @@ Filter:
 	\napp\500
 
 RESPONSE (69.28.158.131:27014)
+------------------------------
 Reply: ff:ff:ff:ff:66:0a
 IP:Port:
 00:00:00:00:00:00
 
 REQUEST (69.28.158.131:27011)
+-----------------------------
 Message Type: 31
 Region Code: ff
 IP:Port:
@@ -26,6 +31,7 @@ Filter:
 	\napp\500
 
 RESPONSE (69.28.158.131:27011)
+------------------------------
 Reply: ff:ff:ff:ff:66:0a
 IP:Port:
 3f:8d:ea:b8:69:87
@@ -262,6 +268,7 @@ IP:Port:
 3e:f4:0b:33:71:4f
 
 REQUEST (69.28.158.131:27015)
+-----------------------------
 Message Type: 31
 Region Code: ff
 IP:Port:
@@ -272,6 +279,7 @@ Filter:
 	\napp\500
 
 RESPONSE (208.64.200.65:27015)
+------------------------------
 Reply: ff:ff:ff:ff:66:0a
 IP:Port:
 44:e8:a2:47:70:b4
