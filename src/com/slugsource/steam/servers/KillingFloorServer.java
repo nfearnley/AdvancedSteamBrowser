@@ -179,6 +179,23 @@ public class KillingFloorServer extends SourceServer
     public String toString()
     {
         String output = super.toString() + "\n";
+        output += "Killing Floor Server Information\n";
+        output += "--------------------------------\n";
+        output += ("Server ID: " + serverId + "\n");
+        output += ("Server IP: " + serverIp + "\n");
+        output += ("Game Port: " + gamePort + "\n");
+        output += ("Status Query Port: " + statusQueryPort + "\n");
+        output += ("Server Name: " + serverName + "\n");
+        output += ("Game Map: " + gameMap + "\n");
+        output += ("Game Type: " + gameType + "\n");
+        output += ("Number of Playes: " + numberOfPlayers + "\n");
+        output += ("Maximum Players: " + maximumPlayers + "\n");
+        output += ("Ping: " + ping + "\n");
+        output += ("Server Flags: " + serverFlags + "\n");
+        output += ("Skill Level: " + skillLevel + "\n");
+        output += ("Game Info: " + gameInfo + "\n");
+        output += ("Players: " + players + "\n");
+        
         // Append Killing Floor server parameters
         return output;
     }
