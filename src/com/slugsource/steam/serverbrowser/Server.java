@@ -4,12 +4,15 @@
  */
 package com.slugsource.steam.serverbrowser;
 
+import java.net.InetAddress;
+
 /**
  *
  * @author Nathan Fearnley
  */
 public class Server
 {
+    private ServerAddress serverAddress;
     private int type;
     private int version;
     private String serverName;
@@ -50,6 +53,16 @@ public class Server
 
     public Server()
     {
+    }
+
+    public ServerAddress getServerAddress()
+    {
+        return serverAddress;
+    }
+
+    public void setServerAddress(ServerAddress serverAddress)
+    {
+        this.serverAddress = serverAddress;
     }
 
     public int getAppId()
