@@ -4,7 +4,7 @@ package com.slugsource.steam.serverbrowser;
  *
  * @author Nathan Fearnley
  */
-public abstract class ServerReader
+public abstract class ServerReader<T extends SourceServer>
 {
 
     protected int index;
@@ -13,14 +13,9 @@ public abstract class ServerReader
     public ServerReader()
     {
     }
-
-    public KillingFloorServer readServer(byte[] rawdata) throws NotAServerException
-    {
-        return readServer(rawdata, new KillingFloorServer());
-    }
-
-    public abstract KillingFloorServer readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException;
-
+    
+    public abstract void readServer(byte[] rawdata, T server) throws NotAServerException;
+    
     protected boolean readBoolean()
     {
         boolean result = data[index] == 0x01;

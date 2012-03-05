@@ -4,14 +4,14 @@ package com.slugsource.steam.serverbrowser;
  *
  * @author Nathan Fearnley
  */
-public class SourceServerReader extends ServerReader
+public class SourceServerReader extends ServerReader<SourceServer>
 {
     public SourceServerReader()
     {
     }
-    
+
     @Override
-    public KillingFloorServer readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException
+    public void readServer(byte[] rawdata, SourceServer server) throws NotAServerException
     {
         this.index = 0;
         this.data = rawdata;
@@ -71,7 +71,5 @@ public class SourceServerReader extends ServerReader
         {
             server.setGameId(readUInt64());
         }
-
-        return server;
     }
 }

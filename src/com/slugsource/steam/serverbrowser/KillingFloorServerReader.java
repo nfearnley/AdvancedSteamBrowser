@@ -4,7 +4,7 @@ package com.slugsource.steam.serverbrowser;
  *
  * @author Nathan Fearnley
  */
-public class KillingFloorServerReader extends ServerReader
+public class KillingFloorServerReader extends ServerReader<KillingFloorServer>
 {
 
     public KillingFloorServerReader()
@@ -12,8 +12,8 @@ public class KillingFloorServerReader extends ServerReader
     }
 
     @Override
-    public KillingFloorServer readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException
-    {
+    public void readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException
+    {   
         // TODO: Change this to read Killing Floor server info
         this.index = 0;
         this.data = rawdata;
@@ -73,7 +73,5 @@ public class KillingFloorServerReader extends ServerReader
         {
             server.setGameId(readUInt64());
         }
-
-        return server;
     }
 }
