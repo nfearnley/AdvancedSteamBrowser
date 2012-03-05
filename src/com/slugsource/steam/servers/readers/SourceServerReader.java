@@ -27,7 +27,7 @@ public class SourceServerReader extends ServerReader<SourceServer>
         }
 
         int type = readUInt8();
-        if (type != 49)
+        if (type != 0x49)
         {
             throw new NotAServerException("Wrong response type.");
         }
