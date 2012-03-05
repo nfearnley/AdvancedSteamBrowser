@@ -134,12 +134,12 @@ Player Name (string):
 09:42:6c:6b:57:6f:6c:66:65:00 (BlkWolfe)
 Player Ping (4 bytes):
 4c:00:00:00 (76)
-Player Scotre (4 bytes):
+Player Score (4 bytes):
 60:0c:00:00 (3168)
 Stats ID:
 00:00:00:20
 
-Interal Player ID (4 bytes)
+Internal Player ID (4 bytes)
 01:00:00:00 (1)
 Player Name (string):
 08:4e:c3:a1:6d:61:68:73:00 (N??mahs)
