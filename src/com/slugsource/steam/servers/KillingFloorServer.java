@@ -197,7 +197,6 @@ public class KillingFloorServer extends SourceServer
         output += ("Game Info: " + gameInfo + "\n");
         output += ("Players: " + players + "\n");
         
-        // Append Killing Floor server parameters
         return output;
     }
 }
