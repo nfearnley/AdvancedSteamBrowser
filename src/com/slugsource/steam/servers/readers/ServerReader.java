@@ -53,7 +53,11 @@ public abstract class ServerReader<T extends SourceServer>
     protected String readLengthPrefixedNullTerminatedString()
     {
         int count = readUInt8();
-        String result = new String(data, index, count);
+        String result = "";
+        if (count != 0)
+        {
+            result = new String(data, index, count - 1);
+        }
         index += count;
         return result;
     }
