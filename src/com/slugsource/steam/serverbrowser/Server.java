@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.slugsource.steam.serverbrowser;
 
 import java.net.InetAddress;
@@ -55,6 +51,11 @@ public class Server
     {
     }
 
+    public Server(InetAddress address, int port)
+    {
+        this.serverAddress = new ServerAddress(address, port);
+    }
+    
     public ServerAddress getServerAddress()
     {
         return serverAddress;

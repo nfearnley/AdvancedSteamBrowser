@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.slugsource.steam.serverbrowser;
 
 import java.io.IOException;
@@ -21,6 +17,7 @@ public class BrowserTest
         try
         {
             sendRequest(InetAddress.getByName("216.246.108.212"), 28952);
+            sendRequest(InetAddress.getByName("68.232.169.160"), 28852);
             sendRequest(InetAddress.getByName("localhost"), 28852);
         } catch (Exception ex)
         {

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.slugsource.steam.serverbrowser;
 
 /**
@@ -10,14 +6,15 @@ package com.slugsource.steam.serverbrowser;
  */
 public class KillingFloorServerReader extends ServerReader
 {
+
     public KillingFloorServerReader()
     {
     }
-    
+
     @Override
     public Server readServer(byte[] rawdata, Server server) throws NotAServerException
     {
-        //TODO: Change this to read Killing Floor server info
+        // TODO: Change this to read Killing Floor server info
         this.index = 0;
         this.data = rawdata;
 
