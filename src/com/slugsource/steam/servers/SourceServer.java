@@ -10,7 +10,6 @@ public class SourceServer extends Server
 {
 
     private ServerAddress serverAddress;
-    private int type;
     private int version;
     private String serverName;
     private String map;
@@ -150,11 +149,6 @@ public class SourceServer extends Server
     public long getSteamId()
     {
         return steamId;
-    }
-
-    public int getType()
-    {
-        return type;
     }
 
     public int getVersion()
@@ -322,11 +316,6 @@ public class SourceServer extends Server
         this.steamId = steamId;
     }
 
-    public void setType(int type)
-    {
-        this.type = type;
-    }
-
     public void setVacSecured(boolean vacSecured)
     {
         this.vacSecured = vacSecured;
@@ -341,7 +330,6 @@ public class SourceServer extends Server
     public String toString()
     {
         String output = "";
-        output += ("Type: " + Integer.toHexString(type) + "\n");
         output += ("Version: " + version + "\n");
         output += ("Server Name: " + serverName + "\n");
         output += ("Map: " + map + "\n");

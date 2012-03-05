@@ -26,7 +26,12 @@ public class SourceServerReader extends ServerReader<SourceServer>
             throw new NotAServerException("Prefix does not match.");
         }
 
-        server.setType(readUInt8());
+        int type = readUInt8();
+        if (type != 49)
+        {
+            throw new NotAServerException("Wrong response type.");
+        }
+        
         server.setVersion(readUInt8());
         server.setServerName(readNullTerminatedString());
         server.setMap(readNullTerminatedString());
