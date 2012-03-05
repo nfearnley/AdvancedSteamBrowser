@@ -22,59 +22,17 @@ public class KillingFloorPlayerReader extends ServerReader<KillingFloorServer>
         this.data = rawdata;
 
         int prefix = readUInt32();
-        if (prefix != 0xFFFFFFFF)
+        if (prefix != 0x00000080)
         {
             throw new NotAServerException("Prefix does not match.");
         }
 
-        server.setType(readUInt8());
-        server.setVersion(readUInt8());
-        server.setServerName(readNullTerminatedString());
-        server.setMap(readNullTerminatedString());
-        server.setGameDirectory(readNullTerminatedString());
-        server.setGameDescription(readNullTerminatedString());
-        server.setAppId(readUInt16());
-        server.setNumberOfPlayers(readUInt8());
-        server.setMaximumPlayers(readUInt8());
-        server.setNumberOfBots(readUInt8());
-        server.setDedicated(readChar());
-        server.setOperatingSystem(readChar());
-        server.setPassword(readBoolean());
-        server.setVacSecured(readBoolean());
-        server.setGameVersion(readNullTerminatedString());
-
-        int extraDataFlag = readUInt8();
-        server.setHasGamePort((extraDataFlag & 0x80) != 0);
-        server.setHasSteamId((extraDataFlag & 0x10) != 0);
-        server.setHasSpectatorServer((extraDataFlag & 0x40) != 0);
-        server.setHasGameTagDataString((extraDataFlag & 0x20) != 0);
-        server.setHasGameId((extraDataFlag & 0x01) != 0);
-
-        if (server.hasGamePort())
+        int id = readUInt8();
+        if (id != 0x02)
         {
-            server.setGamePort(readUInt8());
+            throw new NotAServerException("Wrong id.");
         }
 
-        if (server.hasSteamId())
-        {
-            server.setSteamId(readUInt64());
-        }
-
-        if (server.hasSpectatorServer())
-        {
-            server.setSpectatorServerPort(readUInt16());
-            server.setSpectatorServerName(readNullTerminatedString());
-        }
-
-        if (server.hasGameTagDataString())
-        {
-            server.setGameTagDataString(readNullTerminatedString());
-            server.setDifficulty(server.getGameTagDataString().charAt(4));
-        }
-
-        if (server.hasGameId())
-        {
-            server.setGameId(readUInt64());
-        }
+        throw new UnsupportedOperationException("Not yet finished.");
     }
 }
