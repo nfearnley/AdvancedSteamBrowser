@@ -50,7 +50,7 @@ public abstract class ServerReader<T extends SourceServer>
         return result;
     }
 
-    protected String readLengthPrefixedString()
+    protected String readLengthPrefixedNullTerminatedString()
     {
         int count = readUInt8();
         String result = new String(data, index, count);
