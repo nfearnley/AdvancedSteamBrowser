@@ -5,10 +5,7 @@ import com.slugsource.steam.servers.SourceServer;
 import com.slugsource.steam.servers.readers.SourceServerReader;
 import com.slugsource.steam.string.StringUtils;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
@@ -40,7 +37,7 @@ public class SourceServerQuery extends ServerQuery<SourceServer>
     }
 
     @Override
-    protected void readQueryResponse(DatagramSocket socket, SourceServer server) throws NotAServerException, SocketException, IOException
+    protected void readQueryResponse(DatagramSocket socket, SourceServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         socket.setSoTimeout(1000);
 

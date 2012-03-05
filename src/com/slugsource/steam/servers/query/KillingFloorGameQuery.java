@@ -2,12 +2,8 @@ package com.slugsource.steam.servers.query;
 
 import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.KillingFloorServer;
-import com.slugsource.steam.string.StringUtils;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
@@ -26,7 +22,7 @@ public class KillingFloorGameQuery extends ServerQuery<KillingFloorServer>
         {
             (byte) 0x80, (byte) 0x00, (byte) 0x00, (byte) 0x00
         };
-        
+
         byte query = 0x01;  // Request game information
 
         byte[] buffer = ArrayUtils.addAll(header, query);
@@ -39,9 +35,9 @@ public class KillingFloorGameQuery extends ServerQuery<KillingFloorServer>
     }
 
     @Override
-    protected void readQueryResponse(DatagramSocket socket, KillingFloorServer server) throws NotAServerException, SocketException, IOException
+    protected void readQueryResponse(DatagramSocket socket, KillingFloorServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
-        
+
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

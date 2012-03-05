@@ -8,6 +8,7 @@ import java.net.InetAddress;
  */
 public class SourceServer extends Server
 {
+
     private ServerAddress serverAddress;
     private int type;
     private int version;
@@ -50,12 +51,11 @@ public class SourceServer extends Server
     public SourceServer()
     {
     }
-    
+
     public SourceServer(InetAddress address, int port)
     {
         this.serverAddress = new ServerAddress(address, port);
     }
-    
 
     public int getAppId()
     {
@@ -433,5 +433,4 @@ public class SourceServer extends Server
         }
         return output;
     }
-    
 }

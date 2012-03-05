@@ -1,6 +1,5 @@
 package com.slugsource.steam.servers;
 
-import com.slugsource.steam.servers.SourceServer;
 import java.net.InetAddress;
 
 /**
@@ -26,7 +25,4 @@ public class KillingFloorServer extends SourceServer
         // Append Killing Floor server parameters
         return output;
     }
-    
-    
-    
 }

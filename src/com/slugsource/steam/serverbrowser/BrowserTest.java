@@ -1,6 +1,7 @@
 package com.slugsource.steam.serverbrowser;
 
 import com.slugsource.steam.servers.KillingFloorServer;
+import com.slugsource.steam.servers.query.SourceServerQuery;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
@@ -33,8 +34,10 @@ public class BrowserTest
             String header = "Server " + address.getHostAddress() + ":" + port;
             header += '\n' + StringUtils.repeat('-', header.length());
             System.out.println(header);
-            KillingFloorServer external = ServerBrowser.getServerInfo(address, port);
-            System.out.println(external);
+            KillingFloorServer server = new KillingFloorServer(address, port);
+            SourceServerQuery query = new SourceServerQuery();
+            query.queryServer(address, port, server);
+            System.out.println(server);
         } catch (SocketTimeoutException ex)
         {
             System.out.println("Could not contact server");

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.slugsource.steam.servers;
 
 /**
@@ -10,5 +6,4 @@ package com.slugsource.steam.servers;
  */
 public abstract class Server
 {
-    
 }

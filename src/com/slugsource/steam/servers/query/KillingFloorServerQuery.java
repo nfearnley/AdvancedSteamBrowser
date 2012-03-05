@@ -4,10 +4,7 @@ import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.KillingFloorServer;
 import com.slugsource.steam.servers.readers.KillingFloorServerReader;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.SocketException;
+import java.net.*;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
@@ -39,7 +36,7 @@ public class KillingFloorServerQuery extends ServerQuery<KillingFloorServer>
     }
 
     @Override
-    protected void readQueryResponse(DatagramSocket socket, KillingFloorServer server) throws NotAServerException, SocketException, IOException
+    protected void readQueryResponse(DatagramSocket socket, KillingFloorServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         socket.setSoTimeout(1000);
 

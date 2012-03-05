@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.net.SocketException;
 public abstract class ServerQuery<T extends Server>
 {
 
-    public void queryServer(InetAddress address, int port, T server) throws NotAServerException, SocketException, IOException
+    public void queryServer(InetAddress address, int port, T server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         try (DatagramSocket socket = sendQueryRequest(address, port))
         {
@@ -24,5 +25,5 @@ public abstract class ServerQuery<T extends Server>
 
     protected abstract DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException;
 
-    protected abstract void readQueryResponse(DatagramSocket socket, T server) throws NotAServerException, SocketException, IOException;
+    protected abstract void readQueryResponse(DatagramSocket socket, T server) throws NotAServerException, SocketTimeoutException, SocketException, IOException;
 }
