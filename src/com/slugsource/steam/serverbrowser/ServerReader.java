@@ -8,11 +8,11 @@ package com.slugsource.steam.serverbrowser;
  *
  * @author Nathan Fearnley
  */
-public class ServerReader
+public abstract class ServerReader
 {
 
-    int index;
-    byte[] data;
+    protected int index;
+    protected byte[] data;
 
     public ServerReader()
     {
@@ -20,86 +20,27 @@ public class ServerReader
 
     public Server readServer(byte[] rawdata) throws NotAServerException
     {
-        this.index = 0;
-        this.data = rawdata;
-        Server server = new Server();
-
-        int prefix = readLong();
-        if (prefix != 0xFFFFFFFF)
-        {
-            throw new NotAServerException("Prefix does not match.");
-        }
-
-        server.setType(readByte());
-        server.setVersion(readByte());
-        server.setServerName(readString());
-        server.setMap(readString());
-        server.setGameDirectory(readString());
-        server.setGameDescription(readString());
-        server.setAppId(readShort());
-        server.setNumberOfPlayers(readByte());
-        server.setMaximumPlayers(readByte());
-        server.setNumberOfBots(readByte());
-        server.setDedicated(readChar());
-        server.setOperatingSystem(readChar());
-        server.setPassword(readBoolean());
-        server.setVacSecured(readBoolean());
-        server.setGameVersion(readString());
-
-        int extraDataFlag = readByte();
-        server.setHasGamePort((extraDataFlag & 0x80) != 0);
-        server.setHasSteamId((extraDataFlag & 0x10) != 0);
-        server.setHasSpectatorServer((extraDataFlag & 0x40) != 0);
-        server.setHasGameTagDataString((extraDataFlag & 0x20) != 0);
-        server.setHasGameId((extraDataFlag & 0x01) != 0);
-
-        if (server.hasGamePort())
-        {
-            server.setGamePort(readByte());
-        }
-
-        if (server.hasSteamId())
-        {
-            server.setSteamId(readLongLong());
-        }
-
-        if (server.hasSpectatorServer())
-        {
-            server.setSpectatorServerPort(readShort());
-            server.setSpectatorServerName(readString());
-        }
-
-        if (server.hasGameTagDataString())
-        {
-            server.setGameTagDataString(readString());
-            server.setDifficulty(server.getGameTagDataString().charAt(4));
-        }
-
-        if (server.hasGameId())
-        {
-            server.setGameId(readLongLong());
-        }
-
-        return server;
+        return readServer(rawdata, new Server());
     }
 
-    private boolean readBoolean()
+    public abstract Server readServer(byte[] rawdata, Server server) throws NotAServerException;
+
+    protected boolean readBoolean()
     {
         boolean result = data[index] == 0x01;
         index += 1;
         return result;
     }
 
-    private char readChar()
+    protected char readChar()
     {
         char result = (char) data[index];
         index += 1;
         return result;
     }
 
-    private String readString()
+    protected String readNullTerminatedString()
     {
-
         int count = 0;
         while (data[index + count] != 00)
         {
@@ -115,40 +56,48 @@ public class ServerReader
         return result;
     }
 
-    private int readByte()
+    protected String readLengthPrefixedString()
+    {
+        int count = readUInt8();
+        String result = new String(data, index, count);
+        index += count + 1;
+        return result;
+    }
+
+    protected int readUInt8()
     {
         int result = 0xFF & data[index];
         index += 1;
         return result;
     }
 
-    private int readShort()
+    protected int readUInt16()
     {
-        int result = readByte()
-                | (readByte() << 8);
+        int result = readUInt8()
+                | (readUInt8() << 8);
         return result;
     }
 
-    private int readLong()
+    protected int readUInt32()
     {
-        int result = readByte()
-                | (readByte() << 8)
-                | (readByte() << 16)
-                | (readByte() << 24);
+        int result = readUInt8()
+                | (readUInt8() << 8)
+                | (readUInt8() << 16)
+                | (readUInt8() << 24);
         return result;
     }
 
-    // Fix support for real unsigned 64-bit integers
-    private long readLongLong()
+    // TODO: Add support for real unsigned 64-bit integers
+    protected long readUInt64()
     {
-        long result = (long) readByte()
-                | ((long) readByte() << 8)
-                | ((long) readByte() << 16)
-                | ((long) readByte() << 24)
-                | ((long) readByte() << 32)
-                | ((long) readByte() << 40)
-                | ((long) readByte() << 48)
-                | ((long) readByte() << 56);
+        long result = (long) readUInt8()
+                | ((long) readUInt8() << 8)
+                | ((long) readUInt8() << 16)
+                | ((long) readUInt8() << 24)
+                | ((long) readUInt8() << 32)
+                | ((long) readUInt8() << 40)
+                | ((long) readUInt8() << 48)
+                | ((long) readUInt8() << 56);
         return result;
     }
 }
