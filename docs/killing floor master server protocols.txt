@@ -1,5 +1,153 @@
-KILLING FLOOR BROWSER
----------------------
+UNREAL BROWSER (Killing Floor Servers)
+--------------------------------------
+Strings are formatted:
+ Length in chars (byte) (Includes null)
+ Value (Null terminated string)
+ 
+Color Strings are formatted:
+ Length in chars + 128 (byte) Over 128, length = value - 128 (includes null)
+ Value (Null terminated string, 2 bytes per char)
+
+REQUEST (7707)
+Header: 80:00:00:00
+Info Query (byte)
+    00 Server Information
+    01 Game Information
+    02 Player Information
+    03 Both Game Information / Player Information (2 packets)
+
+RESPONSE (May send multiple packets if not enough room in one)
+Header: 80:00:00:00
+Info Query (byte)
+    00 Server Information
+    01 Game Information
+    02 Player Information
+
+Server Info
+-----------
+Header: 80:00:00:00
+ID: 00 (Server Information)
+Server ID (4 bytes):
+00:00:00:00
+Server IP (string):
+00
+Game Port (4 bytes):
+1b:1e:00:00 (7707)
+Status Query Port (4 bytes):
+00:00:00:00
+Server Name (string):
+2f:4c:45:47:49:4f:4e:20:4f:46:20:50:4f:4e:49:45:53:20:7c:20:41:4c:4d:4f:53:54:20:32:34:2f:37:20:4b:49:4c:4c:49:4e:47:20:46:4c:4f:4f:52:20:32:00
+Game Map (string):
+12:4b:46:2d:44:6f:6f:6d:32:2d:46:69:6e:61:6c:2d:56:37:00
+Game Type (string):
+0b:4b:46:47:61:6d:65:54:79:70:65:00
+Number of players (4 bytes):
+02:00:00:00
+Maximum players (4 bytes):
+06:00:00:00
+Ping (4 bytes):
+00:00:00:00
+Server Flags (4 bytes)
+40:00:00:00
+Skill Level (string);
+02:30:00 (0)
+???
+00:00
+
+Game Information (packet 1)
+---------------------------
+Header:
+80:00:00:00
+ID: 01 (Game Information)
+Strings!
+0b:53:65:72:76:65:72:4d:6f:64:65:00 (ServerMode)
+0a:64:65:64:69:63:61:74:65:64:00 (dedicated)
+0a:41:64:6d:69:6e:4e:61:6d:65:00 (AdminName)
+06:6d:6f:69:70:68:00 (moiph)
+0b:41:64:6d:69:6e:45:6d:61:69:6c:00 (AdminEmail)
+00 ()
+0e:53:65:72:76:65:72:56:65:72:73:69:6f:6e:00 (ServerVersion)
+05:31:30:33:32:00 (1032)
+0d:49:73:56:61:63:53:65:63:75:72:65:64:00 (IsVacSecured)
+05:74:72:75:65:00 (true)
+0d:47:61:6d:65:50:61:73:73:77:6f:72:64:00 (GamePassword)
+05:54:72:75:65:00 (True)
+0e:4d:61:78:53:70:65:63:74:61:74:6f:72:73:00 (MaxSpectators)
+02:30:00 (0)
+0a:4d:61:70:56:6f:74:69:6e:67:00 (MapVoting)
+05:74:72:75:65:00 (true)
+0b:4b:69:63:6b:56:6f:74:69:6e:67:00 (KickVoting)
+05:74:72:75:65:00 (true)
+08:4d:75:74:61:74:6f:72:00 (Mutator)
+10:4b:69:6c:6c:69:6e:67:46:6c:6f:6f:72:4d:75:74:00 (KillingFloorMut)
+08:4d:75:74:61:74:6f:72:00 (Mutator)
+11:4d:75:74:4b:46:41:6e:74:69:42:6c:6f:63:6b:65:72:00 (MutKFAntiBlocker)
+0b:4d:69:6e:50:6c:61:79:65:72:73:00 (MinPlayers)
+02:30:00 (0)
+0d:45:6e:64:54:69:6d:65:44:65:6c:61:79:00 (EndTimeDelay)
+05:34:2e:30:30:00 (4.00)
+0a:47:6f:61:6c:53:63:6f:72:65:00 (GoalScore)
+03:36:30:00 (60)
+0a:54:69:6d:65:4c:69:6d:69:74:00 (TimeLimit)
+02:30:00 (0)
+0d:54:72:61:6e:73:6c:6f:63:61:74:6f:72:00 (Translocator)
+06:46:61:6c:73:65:00 (False)
+0b:57:65:61:70:6f:6e:53:74:61:79:00 (WeaponStay)
+05:54:72:75:65:00 (True)
+0d:46:6f:72:63:65:52:65:73:70:61:77:6e:00 (ForceRespawn)
+05:54:72:75:65:00 (True)
+0d:42:61:6c:61:6e:63:65:54:65:61:6d:73:00 (BalanceTeams)
+05:54:72:75:65:00 (True)
+14:50:6c:61:79:65:72:73:42:61:6c:61:6e:63:65:54:65:61:6d:73:00 (PlayersBalanceTeams)
+05:54:72:75:65:00 (True)
+12:46:72:69:65:6e:64:6c:79:46:69:72:65:53:63:61:6c:65:00 (FriendlyFireScale)
+03:30:25:00 (0%)
+0c:49:6e:69:74:69:61:6c:57:61:76:65:00 (InitialWave)
+02:30:00 (0)
+0a:46:69:6e:61:6c:57:61:76:65:00 (FinalWave)
+03:31:30:00 (10)
+14:4d:61:78:20:72:75:6e:74:69:6d:65:20:7a:6f:6d:62:69:65:73:00 (Max runtime zombies)
+03:33:32:00 (32)
+
+Game Information (packet 2)
+---------------------------
+Header:
+80:00:00:00
+Details:
+01
+Strings!
+0e:53:74:61:72:74:69:6e:67:20:63:61:73:68:00 (Starting cash)
+04:32:35:30:00 (250)
+
+Player Information
+------------------
+Header:
+80:00:00:00
+ID: 02 (Player Information)
+Internal Player ID (4 bytes)
+02:00:00:00 (2)
+Player Name (string):
+09:42:6c:6b:57:6f:6c:66:65:00 (BlkWolfe)
+Player Ping (4 bytes):
+4c:00:00:00 (76)
+Player Scotre (4 bytes):
+60:0c:00:00 (3168)
+Stats ID:
+00:00:00:20
+
+Interal Player ID (4 bytes)
+01:00:00:00 (1)
+Player Name (string):
+08:4e:c3:a1:6d:61:68:73:00 (N??mahs)
+Player ping (4 bytes)
+30:00:00:00 (48)
+Player Score (4 bytes)
+3c:03:00:00 (828)
+Stats ID (4 bytes)
+00:00:00:20
+
+STEAM BROWSER (Killing Floor Servers)
+-------------------------------------
 REQUEST (69.28.158.131:27011)
 Message Type: 31
 Region Code: ff
