@@ -1,4 +1,4 @@
-package com.slugsource.steam.serverbrowser;
+package com.slugsource.steam.servers;
 
 import java.net.InetAddress;
 
@@ -6,7 +6,7 @@ import java.net.InetAddress;
  *
  * @author Nathan Fearnley
  */
-public class SourceServer
+public class SourceServer extends Server
 {
     private ServerAddress serverAddress;
     private int type;

@@ -1,4 +1,7 @@
-package com.slugsource.steam.serverbrowser;
+package com.slugsource.steam.servers.readers;
+
+import com.slugsource.steam.serverbrowser.NotAServerException;
+import com.slugsource.steam.servers.SourceServer;
 
 /**
  *
@@ -13,9 +16,9 @@ public abstract class ServerReader<T extends SourceServer>
     public ServerReader()
     {
     }
-    
+
     public abstract void readServer(byte[] rawdata, T server) throws NotAServerException;
-    
+
     protected boolean readBoolean()
     {
         boolean result = data[index] == 0x01;

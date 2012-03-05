@@ -1,19 +1,22 @@
-package com.slugsource.steam.serverbrowser;
+package com.slugsource.steam.servers.readers;
+
+import com.slugsource.steam.serverbrowser.NotAServerException;
+import com.slugsource.steam.servers.KillingFloorServer;
 
 /**
  *
  * @author Nathan Fearnley
  */
-public class KillingFloorServerReader extends ServerReader<KillingFloorServer>
+public class KillingFloorGameReader extends ServerReader<KillingFloorServer>
 {
 
-    public KillingFloorServerReader()
+    public KillingFloorGameReader()
     {
     }
 
     @Override
     public void readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException
-    {   
+    {
         // TODO: Change this to read Killing Floor server info
         this.index = 0;
         this.data = rawdata;

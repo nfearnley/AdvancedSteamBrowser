@@ -1,5 +1,8 @@
 package com.slugsource.steam.serverbrowser;
 
+import com.slugsource.steam.servers.readers.SourceServerReader;
+import com.slugsource.steam.servers.readers.KillingFloorServerReader;
+import com.slugsource.steam.servers.KillingFloorServer;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

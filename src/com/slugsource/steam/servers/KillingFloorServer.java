@@ -1,5 +1,6 @@
-package com.slugsource.steam.serverbrowser;
+package com.slugsource.steam.servers;
 
+import com.slugsource.steam.servers.SourceServer;
 import java.net.InetAddress;
 
 /**

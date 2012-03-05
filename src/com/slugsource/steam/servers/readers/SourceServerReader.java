@@ -1,4 +1,7 @@
-package com.slugsource.steam.serverbrowser;
+package com.slugsource.steam.servers.readers;
+
+import com.slugsource.steam.serverbrowser.NotAServerException;
+import com.slugsource.steam.servers.SourceServer;
 
 /**
  *
@@ -6,6 +9,7 @@ package com.slugsource.steam.serverbrowser;
  */
 public class SourceServerReader extends ServerReader<SourceServer>
 {
+
     public SourceServerReader()
     {
     }
