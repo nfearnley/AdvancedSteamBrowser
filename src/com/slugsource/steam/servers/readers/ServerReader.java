@@ -72,6 +72,8 @@ public abstract class ServerReader<T extends SourceServer>
         return result;
     }
 
+    // Bug: large unsigned ints become negative signed ints
+    // TODO: Add support for real unsigned 32-bit integers
     protected int readUInt32()
     {
         int result = readUInt8()
@@ -81,6 +83,7 @@ public abstract class ServerReader<T extends SourceServer>
         return result;
     }
 
+    // Bug: large unsigned ints become negative signed ints
     // TODO: Add support for real unsigned 64-bit integers
     protected long readUInt64()
     {
