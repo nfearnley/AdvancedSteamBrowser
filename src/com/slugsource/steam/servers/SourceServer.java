@@ -330,6 +330,7 @@ public class SourceServer extends Server
     public String toString()
     {
         String output = "";
+        output += "-------------------------\n";
         output += "Source Server Information\n";
         output += "-------------------------\n";
         output += ("Version: " + version + "\n");

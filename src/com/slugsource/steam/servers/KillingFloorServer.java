@@ -179,6 +179,7 @@ public class KillingFloorServer extends SourceServer
     public String toString()
     {
         String output = super.toString() + "\n";
+        output += "--------------------------------\n";
         output += "Killing Floor Server Information\n";
         output += "--------------------------------\n";
         output += ("Server ID: " + serverId + "\n");

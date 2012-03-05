@@ -33,7 +33,7 @@ public class BrowserTest
         try
         {
             String header = "Server " + address.getHostAddress() + ":" + port;
-            header += '\n' + StringUtils.repeat('-', header.length());
+            header += '\n' + StringUtils.repeat('=', header.length());
             System.out.println(header);
             
             KillingFloorServer server = new KillingFloorServer(address, port);
