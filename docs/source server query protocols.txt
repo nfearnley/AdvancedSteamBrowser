@@ -56,7 +56,7 @@ Content (A2A_INFO response):
         0x40    Spectator Server Port and Name
         0x20    Game tag data string
         0x01    Server's GameID
-    Server's Game Port (byte)
+    Server's Game Port (short)
     Server's SteamID (long, long)
     Spectator Server Port and Name (short, string)
     Game tag data string (string)

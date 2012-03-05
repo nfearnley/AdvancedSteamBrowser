@@ -56,7 +56,7 @@ public class SourceServerReader extends ServerReader<SourceServer>
 
         if (server.hasGamePort())
         {
-            server.setGamePort(readUInt8());
+            server.setGamePort(readUInt16());
         }
 
         if (server.hasSteamId())
