@@ -1,6 +1,7 @@
 package com.slugsource.steam.serverbrowser;
 
 import com.slugsource.steam.servers.KillingFloorServer;
+import com.slugsource.steam.servers.query.KillingFloorServerQuery;
 import com.slugsource.steam.servers.query.SourceServerQuery;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -18,8 +19,8 @@ public class BrowserTest
     {
         try
         {
-            sendRequest(InetAddress.getByName("216.246.108.212"), 28952);
-            sendRequest(InetAddress.getByName("68.232.169.160"), 28852);
+            sendRequest(InetAddress.getByName("208.122.48.100"), 28852);
+            sendRequest(InetAddress.getByName("24.93.201.227"), 28852);
             sendRequest(InetAddress.getByName("localhost"), 28852);
         } catch (Exception ex)
         {
@@ -34,9 +35,15 @@ public class BrowserTest
             String header = "Server " + address.getHostAddress() + ":" + port;
             header += '\n' + StringUtils.repeat('-', header.length());
             System.out.println(header);
+            
             KillingFloorServer server = new KillingFloorServer(address, port);
-            SourceServerQuery query = new SourceServerQuery();
-            query.queryServer(address, port, server);
+            
+            SourceServerQuery srcQuery = new SourceServerQuery();
+            srcQuery.queryServer(address, port, server);
+            
+            KillingFloorServerQuery kfQuery = new KillingFloorServerQuery();
+            kfQuery.queryServer(address, server.getGamePort() + 1, server);
+            
             System.out.println(server);
         } catch (SocketTimeoutException ex)
         {
