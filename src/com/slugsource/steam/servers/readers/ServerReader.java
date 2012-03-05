@@ -54,7 +54,7 @@ public abstract class ServerReader<T extends SourceServer>
     {
         int count = readUInt8();
         String result = new String(data, index, count);
-        index += count + 1;
+        index += count;
         return result;
     }
 
