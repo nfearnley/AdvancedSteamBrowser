@@ -14,12 +14,12 @@ public abstract class ServerReader
     {
     }
 
-    public Server readServer(byte[] rawdata) throws NotAServerException
+    public KillingFloorServer readServer(byte[] rawdata) throws NotAServerException
     {
-        return readServer(rawdata, new Server());
+        return readServer(rawdata, new KillingFloorServer());
     }
 
-    public abstract Server readServer(byte[] rawdata, Server server) throws NotAServerException;
+    public abstract KillingFloorServer readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException;
 
     protected boolean readBoolean()
     {

@@ -32,7 +32,7 @@ public class BrowserTest
             String header = "Server " + address.getHostAddress() + ":" + port;
             header += '\n' + StringUtils.repeat('-', header.length());
             System.out.println(header);
-            Server external = ServerBrowser.getServerInfo(address, port);
+            KillingFloorServer external = ServerBrowser.getServerInfo(address, port);
             System.out.println(external);
         } catch (SocketTimeoutException ex)
         {

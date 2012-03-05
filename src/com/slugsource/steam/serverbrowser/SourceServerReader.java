@@ -11,7 +11,7 @@ public class SourceServerReader extends ServerReader
     }
     
     @Override
-    public Server readServer(byte[] rawdata, Server server) throws NotAServerException
+    public KillingFloorServer readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException
     {
         this.index = 0;
         this.data = rawdata;

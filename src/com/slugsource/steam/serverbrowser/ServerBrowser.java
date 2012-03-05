@@ -57,11 +57,11 @@ public class ServerBrowser
      *
      * }
      */
-    public static Server getServerInfo(InetAddress address, int port) throws SocketTimeoutException, NotAServerException, IOException
+    public static KillingFloorServer getServerInfo(InetAddress address, int port) throws SocketTimeoutException, NotAServerException, IOException
     {
         SourceServerReader sReader = new SourceServerReader();
         KillingFloorServerReader kfReader = new KillingFloorServerReader();
-        Server myServer = new Server(address, port);
+        KillingFloorServer myServer = new KillingFloorServer(address, port);
         byte[] data;
 
         data = querySourceServer(address, port);

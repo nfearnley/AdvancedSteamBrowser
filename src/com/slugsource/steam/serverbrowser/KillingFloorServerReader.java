@@ -12,7 +12,7 @@ public class KillingFloorServerReader extends ServerReader
     }
 
     @Override
-    public Server readServer(byte[] rawdata, Server server) throws NotAServerException
+    public KillingFloorServer readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException
     {
         // TODO: Change this to read Killing Floor server info
         this.index = 0;
