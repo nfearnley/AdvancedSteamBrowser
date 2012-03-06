@@ -1,14 +1,13 @@
 package com.slugsource.steam.servers.readers;
 
 import com.slugsource.steam.serverbrowser.NotAServerException;
-import com.slugsource.steam.servers.SourceServer;
 import java.net.DatagramPacket;
 
 /**
  *
  * @author Nathan Fearnley
  */
-public abstract class ServerReader<T extends SourceServer>
+public abstract class ServerReader<T>
 {
 
     protected int index;
