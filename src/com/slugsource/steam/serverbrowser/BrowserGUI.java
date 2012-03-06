@@ -7,12 +7,14 @@ package com.slugsource.steam.serverbrowser;
 import com.slugsource.steam.servers.KillingFloorServer;
 import com.slugsource.steam.servers.ServerAddress;
 import com.slugsource.steam.servers.query.*;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.List;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -22,6 +24,7 @@ public class BrowserGUI extends javax.swing.JFrame
 {
 
     List<ServerAddress> serverList = new LinkedList<>();
+    KillingFloorServer server = null;
 
     /**
      * Creates new form BrowserGUI
@@ -47,6 +50,7 @@ public class BrowserGUI extends javax.swing.JFrame
         serverTextArea = new javax.swing.JTextArea();
         queryMasterServerButton = new javax.swing.JButton();
         queryServerButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 300));
@@ -78,6 +82,13 @@ public class BrowserGUI extends javax.swing.JFrame
             }
         });
 
+        jButton1.setText("Copy IP:Port");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -88,7 +99,9 @@ public class BrowserGUI extends javax.swing.JFrame
                     .addComponent(jSplitPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(queryMasterServerButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(queryServerButton)))
                 .addContainerGap())
         );
@@ -100,7 +113,8 @@ public class BrowserGUI extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(queryMasterServerButton)
-                    .addComponent(queryServerButton))
+                    .addComponent(queryServerButton)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -114,7 +128,7 @@ public class BrowserGUI extends javax.swing.JFrame
         {
             return;
         }
-        
+
         try
         {
             ServerAddress serverAddress = serverList.get(serverIndex);
@@ -124,15 +138,15 @@ public class BrowserGUI extends javax.swing.JFrame
             KillingFloorServerQuery kfServerQuery = new KillingFloorServerQuery();
             KillingFloorGameQuery kfGameQuery = new KillingFloorGameQuery();
             KillingFloorPlayerQuery kfPlayerQuery = new KillingFloorPlayerQuery();
-            
-            
-            KillingFloorServer server = new KillingFloorServer(address, port);
+
+
+            server = new KillingFloorServer(address, port);
 
             srcQuery.queryServer(address, port, server);
             kfServerQuery.queryServer(address, server.getGamePort() + 1, server);
             kfGameQuery.queryServer(address, server.getGamePort() + 1, server);
             kfPlayerQuery.queryServer(address, server.getGamePort() + 1, server);
-            
+
             serverTextArea.setText(server.toString());
         } catch (SocketTimeoutException ex)
         {
@@ -146,7 +160,7 @@ public class BrowserGUI extends javax.swing.JFrame
         {
             System.out.println("Error querying server");
             serverTextArea.setText("Error querying server");
-            
+
         }
     }//GEN-LAST:event_queryServerButtonActionPerformed
 
@@ -158,7 +172,7 @@ public class BrowserGUI extends javax.swing.JFrame
             InetAddress address = InetAddress.getByName("208.64.200.52");
             int port = 27011;
             MasterServerQuery mQuery = new MasterServerQuery();
-            
+
             serverList = new LinkedList<>();
             mQuery.queryServer(address, port, "\\gamedir\\killingfloor", serverList);
 
@@ -177,6 +191,17 @@ public class BrowserGUI extends javax.swing.JFrame
             serverTextArea.setText("Error querying server");
         }
     }//GEN-LAST:event_queryMasterServerButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+        if (server != null)
+        {
+            String selection = server.getServerAddress().getAddress().getHostAddress() + ":" + server.getGamePort();
+            StringSelection data = new StringSelection(selection);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(data, data);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,6 +256,7 @@ public class BrowserGUI extends javax.swing.JFrame
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList addressList;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
