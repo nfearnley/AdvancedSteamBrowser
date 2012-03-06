@@ -25,7 +25,7 @@ public class KillingFloorPlayerReader extends ServerReader<KillingFloorServer>
         this.data = packet.getData();
         this.length = packet.getLength();
 
-        int prefix = readUInt32();
+        int prefix = readLittleEndianUInt32();
         if (prefix != 0x00000080)
         {
             throw new NotAServerException("Prefix does not match.");
@@ -42,11 +42,11 @@ public class KillingFloorPlayerReader extends ServerReader<KillingFloorServer>
         while (index < length)
         {
             Player player = new Player();
-            player.setId(readUInt32());
+            player.setId(readLittleEndianUInt32());
             player.setName(readLengthPrefixedNullTerminatedString());
-            player.setPing(readUInt32());
-            player.setScore(readUInt32());
-            player.setStatsId(readUInt32());
+            player.setPing(readLittleEndianUInt32());
+            player.setScore(readLittleEndianUInt32());
+            player.setStatsId(readLittleEndianUInt32());
 
             playerList.add(player);
         }

@@ -24,7 +24,7 @@ public class KillingFloorGameReader extends ServerReader<KillingFloorServer>
         this.data = packet.getData();
         this.length = packet.getLength();
 
-        int prefix = readUInt32();
+        int prefix = readLittleEndianUInt32();
         if (prefix != 0x00000080)
         {
             throw new NotAServerException("Prefix does not match.");

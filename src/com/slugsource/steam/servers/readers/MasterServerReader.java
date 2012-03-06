@@ -27,14 +27,14 @@ public class MasterServerReader extends ServerReader<List<ServerAddress>>
         this.data = packet.getData();
         this.length = packet.getLength();
 
-        int prefix = readUInt32();
+        int prefix = readLittleEndianUInt32();
         if (prefix != 0xFFFFFFFF)
         {
             throw new NotAServerException("Prefix does not match.");
         }
 
-        int type = readUInt8();
-        if (type != 0x49)
+        int type = readLittleEndianUInt16();
+        if (type != 0x0A66)
         {
             throw new NotAServerException("Wrong response type.");
         }
@@ -60,7 +60,7 @@ public class MasterServerReader extends ServerReader<List<ServerAddress>>
             }
             
             address.setAddress(ipAddress);
-            address.setPort(readUInt16());
+            address.setPort(readBigEndianUInt16());
 
             serverList.add(address);
         }

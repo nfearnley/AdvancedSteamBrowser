@@ -23,7 +23,7 @@ public class KillingFloorServerReader extends ServerReader<KillingFloorServer>
         this.data = packet.getData();
         this.length = packet.getLength();
 
-        int prefix = readUInt32();
+        int prefix = readLittleEndianUInt32();
         if (prefix != 0x00000080)
         {
             throw new NotAServerException("Prefix does not match.");
@@ -35,17 +35,17 @@ public class KillingFloorServerReader extends ServerReader<KillingFloorServer>
             throw new NotAServerException("Wrong id.");
         }
 
-        server.setServerId(readUInt32());
+        server.setServerId(readLittleEndianUInt32());
         server.setServerIp(readLengthPrefixedNullTerminatedString());
-        server.setKFGamePort(readUInt32());
-        server.setStatusQueryPort(readUInt32());
+        server.setKFGamePort(readLittleEndianUInt32());
+        server.setStatusQueryPort(readLittleEndianUInt32());
         server.setKFServerName(readLengthPrefixedNullTerminatedString());
         server.setGameMap(readLengthPrefixedNullTerminatedString());
         server.setGameType(readLengthPrefixedNullTerminatedString());
-        server.setKFNumberOfPlayers(readUInt32());
-        server.setKFMaximumPlayers(readUInt32());
-        server.setPing(readUInt32());
-        server.setServerFlags(readUInt32());
+        server.setKFNumberOfPlayers(readLittleEndianUInt32());
+        server.setKFMaximumPlayers(readLittleEndianUInt32());
+        server.setPing(readLittleEndianUInt32());
+        server.setServerFlags(readLittleEndianUInt32());
         server.setSkillLevel(readLengthPrefixedNullTerminatedString());
     }
 }

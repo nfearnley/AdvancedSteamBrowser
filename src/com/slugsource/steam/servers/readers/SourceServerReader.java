@@ -22,7 +22,7 @@ public class SourceServerReader extends ServerReader<SourceServer>
         this.data = packet.getData();
         this.length = packet.getLength();
 
-        int prefix = readUInt32();
+        int prefix = readLittleEndianUInt32();
         if (prefix != 0xFFFFFFFF)
         {
             throw new NotAServerException("Prefix does not match.");
@@ -39,7 +39,7 @@ public class SourceServerReader extends ServerReader<SourceServer>
         server.setMap(readNullTerminatedString());
         server.setGameDirectory(readNullTerminatedString());
         server.setGameDescription(readNullTerminatedString());
-        server.setAppId(readUInt16());
+        server.setAppId(readLittleEndianUInt16());
         server.setNumberOfPlayers(readUInt8());
         server.setMaximumPlayers(readUInt8());
         server.setNumberOfBots(readUInt8());
@@ -58,17 +58,17 @@ public class SourceServerReader extends ServerReader<SourceServer>
 
         if (server.hasGamePort())
         {
-            server.setGamePort(readUInt16());
+            server.setGamePort(readLittleEndianUInt16());
         }
 
         if (server.hasSteamId())
         {
-            server.setSteamId(readUInt64());
+            server.setSteamId(readLittleEndianUInt64());
         }
 
         if (server.hasSpectatorServer())
         {
-            server.setSpectatorServerPort(readUInt16());
+            server.setSpectatorServerPort(readLittleEndianUInt16());
             server.setSpectatorServerName(readNullTerminatedString());
         }
 
@@ -80,7 +80,7 @@ public class SourceServerReader extends ServerReader<SourceServer>
 
         if (server.hasGameId())
         {
-            server.setGameId(readUInt64());
+            server.setGameId(readLittleEndianUInt64());
         }
     }
 }

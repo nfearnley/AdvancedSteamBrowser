@@ -94,16 +94,23 @@ public abstract class ServerReader<T>
         return result;
     }
 
-    protected int readUInt16()
+    protected int readLittleEndianUInt16()
     {
         int result = readUInt8()
                 | (readUInt8() << 8);
         return result;
     }
+    
+    protected int readBigEndianUInt16()
+    {
+        int result = (readUInt8() << 8)
+                | (readUInt8());
+        return result;
+    }
 
     // Bug: large unsigned ints become negative signed ints
     // TODO: Add support for real unsigned 32-bit integers
-    protected int readUInt32()
+    protected int readLittleEndianUInt32()
     {
         int result = readUInt8()
                 | (readUInt8() << 8)
@@ -111,10 +118,21 @@ public abstract class ServerReader<T>
                 | (readUInt8() << 24);
         return result;
     }
+    
+    // Bug: large unsigned ints become negative signed ints
+    // TODO: Add support for real unsigned 32-bit integers
+    protected int readBigEndianUInt32()
+    {
+        int result = (readUInt8() << 24)
+                | (readUInt8() << 16)
+                | (readUInt8() << 8)
+                | (readUInt8());
+        return result;
+    }
 
     // Bug: large unsigned ints become negative signed ints
     // TODO: Add support for real unsigned 64-bit integers
-    protected long readUInt64()
+    protected long readLittleEndianUInt64()
     {
         long result = (long) readUInt8()
                 | ((long) readUInt8() << 8)
@@ -124,6 +142,21 @@ public abstract class ServerReader<T>
                 | ((long) readUInt8() << 40)
                 | ((long) readUInt8() << 48)
                 | ((long) readUInt8() << 56);
+        return result;
+    }
+
+    // Bug: large unsigned ints become negative signed ints
+    // TODO: Add support for real unsigned 64-bit integers
+    protected long readBigEndianUInt64()
+    {
+        long result = ((long) readUInt8() << 56)
+                | ((long) readUInt8() << 48)
+                | ((long) readUInt8() << 40)
+                | ((long) readUInt8() << 32)
+                | ((long) readUInt8() << 24)
+                | ((long) readUInt8() << 16)
+                | ((long) readUInt8() << 8)
+                | ((long) readUInt8());
         return result;
     }
 }

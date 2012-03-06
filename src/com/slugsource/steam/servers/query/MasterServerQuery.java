@@ -18,7 +18,7 @@ public class MasterServerQuery
 
     MasterServerReader reader = new MasterServerReader();
 
-    public void queryServer(InetAddress address, int port, String filter, List<ServerAddress> serverList)  throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    public void queryServer(InetAddress address, int port, String filter, List<ServerAddress> serverList) throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         ServerAddress lastAddress;
         try
@@ -29,11 +29,13 @@ public class MasterServerQuery
             return;
         }
 
-        try (DatagramSocket socket = sendQueryRequest(address, port, lastAddress, filter))
+        do
         {
-            readQueryResponse(socket, serverList);
-        }
-
+            try (DatagramSocket socket = sendQueryRequest(address, port, lastAddress, filter))
+            {
+                readQueryResponse(socket, serverList);
+            }
+        } while (!lastAddress.getAddress().equals(InetAddress.getByName("0.0.0.0")));
     }
 
     private DatagramSocket sendQueryRequest(InetAddress address, int port, ServerAddress lastAddress, String filter) throws SocketException, IOException
@@ -42,13 +44,20 @@ public class MasterServerQuery
 
         byte[] header =
         {
-            (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0x54
+            (byte) 0x31, (byte) 0xFF
         };
 
-        byte[] query = StringUtils.getNullTerminatedString("Source Engine Query");
+        
+        String lastAddressIP = lastAddress.getAddress().getHostAddress();
+        String lastAddressPort = Integer.toString(lastAddress.getPort());
+        String lastAddressString = lastAddressIP + ":" + lastAddressPort;
+        byte[] lastAddressBytes = StringUtils.getNullTerminatedString(lastAddressString);
+        
+        byte[] filterBytes = StringUtils.getNullTerminatedString(filter);
 
-        byte[] buffer = ArrayUtils.addAll(header, query);
-
+        byte[] buffer = ArrayUtils.addAll(header, lastAddressBytes);
+        buffer = ArrayUtils.addAll(buffer, filterBytes);
+        
         DatagramPacket request = new DatagramPacket(
                 buffer, buffer.length, address, port);
 
@@ -58,7 +67,7 @@ public class MasterServerQuery
 
     private void readQueryResponse(DatagramSocket socket, List<ServerAddress> serverList) throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
-        socket.setSoTimeout(300);
+        socket.setSoTimeout(1000);
 
         byte[] receiveBuffer = new byte[1400];
         DatagramPacket response = new DatagramPacket(receiveBuffer, 1400);
