@@ -136,7 +136,7 @@ Player Ping (4 bytes):
 4c:00:00:00 (76)
 Player Score (4 bytes):
 60:0c:00:00 (3168)
-Stats ID:
+Stats ID (4 bytes):
 00:00:00:20
 
 Internal Player ID (4 bytes)
@@ -147,5 +147,5 @@ Player ping (4 bytes)
 30:00:00:00 (48)
 Player Score (4 bytes)
 3c:03:00:00 (828)
-Stats ID (4 bytes)
+Stats ID (4 bytes):
 00:00:00:20
