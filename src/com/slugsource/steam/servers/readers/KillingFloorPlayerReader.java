@@ -2,7 +2,9 @@ package com.slugsource.steam.servers.readers;
 
 import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.KillingFloorServer;
+import com.slugsource.steam.servers.Player;
 import java.net.DatagramPacket;
+import java.util.List;
 
 /**
  *
@@ -32,9 +34,21 @@ public class KillingFloorPlayerReader extends ServerReader<KillingFloorServer>
         int id = readUInt8();
         if (id != 0x02)
         {
-            throw new NotAServerException("Wrong id.");
+            throw new NotAServerException("Wrong ID.");
         }
 
-        throw new UnsupportedOperationException("Not yet finished.");
+        List<Player> playerList = server.getPlayerList();
+
+        while (index < length)
+        {
+            Player player = new Player();
+            player.setId(readUInt32());
+            player.setName(readLengthPrefixedNullTerminatedString());
+            player.setPing(readUInt32());
+            player.setScore(readUInt32());
+            player.setStatsId(readUInt32());
+
+            playerList.add(player);
+        }
     }
 }
