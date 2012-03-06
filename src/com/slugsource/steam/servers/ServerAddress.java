@@ -41,4 +41,13 @@ public class ServerAddress
     {
         this.port = port;
     }
+
+    @Override
+    public String toString()
+    {
+        String output = "";
+        output += address.getHostAddress() + ":";
+        output += port;
+        return output;
+    }
 }
