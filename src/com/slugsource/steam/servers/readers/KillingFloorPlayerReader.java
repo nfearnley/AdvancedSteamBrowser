@@ -2,6 +2,7 @@ package com.slugsource.steam.servers.readers;
 
 import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.KillingFloorServer;
+import java.net.DatagramPacket;
 
 /**
  *
@@ -15,11 +16,12 @@ public class KillingFloorPlayerReader extends ServerReader<KillingFloorServer>
     }
 
     @Override
-    public void readServer(byte[] rawdata, KillingFloorServer server) throws NotAServerException
+    public void readServer(DatagramPacket packet, KillingFloorServer server) throws NotAServerException
     {
         // TODO: Change this to read Killing Floor server info
         this.index = 0;
-        this.data = rawdata;
+        this.data = packet.getData();
+        this.length = packet.getLength();
 
         int prefix = readUInt32();
         if (prefix != 0x00000080)

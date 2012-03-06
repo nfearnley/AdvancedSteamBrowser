@@ -1,6 +1,8 @@
 package com.slugsource.steam.serverbrowser;
 
 import com.slugsource.steam.servers.KillingFloorServer;
+import com.slugsource.steam.servers.query.KillingFloorGameQuery;
+import com.slugsource.steam.servers.query.KillingFloorPlayerQuery;
 import com.slugsource.steam.servers.query.KillingFloorServerQuery;
 import com.slugsource.steam.servers.query.SourceServerQuery;
 import java.io.IOException;
@@ -14,6 +16,11 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class BrowserTest
 {
+
+    private static SourceServerQuery srcQuery = new SourceServerQuery();
+    private static KillingFloorServerQuery kfServerQuery = new KillingFloorServerQuery();
+    private static KillingFloorGameQuery kfGameQuery = new KillingFloorGameQuery();
+    private static KillingFloorPlayerQuery kfPlayerQuery = new KillingFloorPlayerQuery();
 
     public static void main(String[] args)
     {
@@ -35,15 +42,14 @@ public class BrowserTest
             String header = "Server " + address.getHostAddress() + ":" + port;
             header += '\n' + StringUtils.repeat('=', header.length());
             System.out.println(header);
-            
+
             KillingFloorServer server = new KillingFloorServer(address, port);
-            
-            SourceServerQuery srcQuery = new SourceServerQuery();
+
             srcQuery.queryServer(address, port, server);
-            
-            KillingFloorServerQuery kfQuery = new KillingFloorServerQuery();
-            kfQuery.queryServer(address, server.getGamePort() + 1, server);
-            
+            kfServerQuery.queryServer(address, server.getGamePort() + 1, server);
+            kfGameQuery.queryServer(address, server.getGamePort() + 1, server);
+            kfPlayerQuery.queryServer(address, server.getGamePort() + 1, server);
+
             System.out.println(server);
         } catch (SocketTimeoutException ex)
         {

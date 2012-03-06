@@ -2,6 +2,7 @@ package com.slugsource.steam.servers.query;
 
 import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.KillingFloorServer;
+import com.slugsource.steam.servers.readers.KillingFloorGameReader;
 import java.io.IOException;
 import java.net.*;
 import org.apache.commons.lang3.ArrayUtils;
@@ -12,6 +13,8 @@ import org.apache.commons.lang3.ArrayUtils;
  */
 public class KillingFloorGameQuery extends ServerQuery<KillingFloorServer>
 {
+
+    KillingFloorGameReader reader = new KillingFloorGameReader();
 
     @Override
     protected DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException
@@ -37,7 +40,30 @@ public class KillingFloorGameQuery extends ServerQuery<KillingFloorServer>
     @Override
     protected void readQueryResponse(DatagramSocket socket, KillingFloorServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
+        socket.setSoTimeout(1000);
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        byte[] receiveBuffer = new byte[1400];
+        DatagramPacket response = new DatagramPacket(receiveBuffer, 1400);
+
+        boolean gotPacket = false;
+
+        try
+        {
+            while (true)
+            {
+                socket.receive(response);
+
+                gotPacket = true;
+
+                reader.readServer(response, server);
+            }
+
+        } catch (SocketTimeoutException ex)
+        {
+            if (gotPacket == false)
+            {
+                throw ex;
+            }
+        }
     }
 }

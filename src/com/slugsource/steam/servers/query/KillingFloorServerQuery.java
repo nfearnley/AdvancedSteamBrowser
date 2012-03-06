@@ -14,6 +14,8 @@ import org.apache.commons.lang3.ArrayUtils;
 public class KillingFloorServerQuery extends ServerQuery<KillingFloorServer>
 {
 
+        KillingFloorServerReader reader = new KillingFloorServerReader();
+
     @Override
     protected DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException
     {
@@ -45,10 +47,6 @@ public class KillingFloorServerQuery extends ServerQuery<KillingFloorServer>
 
         socket.receive(response);
 
-        byte[] data = response.getData();
-
-        KillingFloorServerReader sReader = new KillingFloorServerReader();
-
-        sReader.readServer(data, server);
+        reader.readServer(response, server);
     }
 }

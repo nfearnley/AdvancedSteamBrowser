@@ -15,6 +15,8 @@ import org.apache.commons.lang3.ArrayUtils;
 public class SourceServerQuery extends ServerQuery<SourceServer>
 {
 
+    SourceServerReader reader = new SourceServerReader();
+
     @Override
     protected DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException
     {
@@ -46,10 +48,6 @@ public class SourceServerQuery extends ServerQuery<SourceServer>
 
         socket.receive(response);
 
-        byte[] data = response.getData();
-
-        SourceServerReader sReader = new SourceServerReader();
-
-        sReader.readServer(data, server);
+        reader.readServer(response, server);
     }
 }

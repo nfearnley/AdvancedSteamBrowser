@@ -2,6 +2,7 @@ package com.slugsource.steam.servers.readers;
 
 import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.SourceServer;
+import java.net.DatagramPacket;
 
 /**
  *
@@ -12,15 +13,20 @@ public abstract class ServerReader<T extends SourceServer>
 
     protected int index;
     protected byte[] data;
+    protected int length;
 
     public ServerReader()
     {
     }
 
-    public abstract void readServer(byte[] rawdata, T server) throws NotAServerException;
+    public abstract void readServer(DatagramPacket packet, T server) throws NotAServerException;
 
     protected boolean readBoolean()
     {
+        if (index >= length)
+        {
+            throw new IndexOutOfBoundsException("Reached end of packet.");
+        }
         boolean result = data[index] == 0x01;
         index += 1;
         return result;
@@ -28,6 +34,10 @@ public abstract class ServerReader<T extends SourceServer>
 
     protected char readChar()
     {
+        if (index >= length)
+        {
+            throw new IndexOutOfBoundsException("Reached end of packet.");
+        }
         char result = (char) data[index];
         index += 1;
         return result;
@@ -35,13 +45,17 @@ public abstract class ServerReader<T extends SourceServer>
 
     protected String readNullTerminatedString()
     {
+        if (index >= length)
+        {
+            throw new IndexOutOfBoundsException("Reached end of packet.");
+        }
         int count = 0;
         while (data[index + count] != 00)
         {
             count++;
-            if (index + count > data.length)
+            if (index + count >= length)
             {
-                throw new IndexOutOfBoundsException();
+                throw new IndexOutOfBoundsException("Reached end of packet.");
             }
         }
 
@@ -52,7 +66,15 @@ public abstract class ServerReader<T extends SourceServer>
 
     protected String readLengthPrefixedNullTerminatedString()
     {
+        if (index >= length)
+        {
+            throw new IndexOutOfBoundsException("Reached end of packet.");
+        }
         int count = readUInt8();
+        if (index + count > length)
+        {
+            throw new IndexOutOfBoundsException("Reached end of packet.");
+        }
         String result = "";
         if (count != 0)
         {
@@ -64,6 +86,10 @@ public abstract class ServerReader<T extends SourceServer>
 
     protected int readUInt8()
     {
+        if (index >= length)
+        {
+            throw new IndexOutOfBoundsException("Reached end of packet.");
+        }
         int result = 0xFF & data[index];
         index += 1;
         return result;

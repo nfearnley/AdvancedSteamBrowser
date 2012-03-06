@@ -2,6 +2,7 @@ package com.slugsource.steam.servers.readers;
 
 import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.SourceServer;
+import java.net.DatagramPacket;
 
 /**
  *
@@ -15,10 +16,11 @@ public class SourceServerReader extends ServerReader<SourceServer>
     }
 
     @Override
-    public void readServer(byte[] rawdata, SourceServer server) throws NotAServerException
+    public void readServer(DatagramPacket packet, SourceServer server) throws NotAServerException
     {
         this.index = 0;
-        this.data = rawdata;
+        this.data = packet.getData();
+        this.length = packet.getLength();
 
         int prefix = readUInt32();
         if (prefix != 0xFFFFFFFF)

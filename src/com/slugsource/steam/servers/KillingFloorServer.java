@@ -23,8 +23,8 @@ public class KillingFloorServer extends SourceServer
     private int ping;
     private int serverFlags;
     private String skillLevel;
-    private List<GameInfo> gameInfo = new LinkedList<>();
-    private List<Player> players = new LinkedList<>();
+    private List<GameInfo> gameInfoList = new LinkedList<>();
+    private List<Player> playerList = new LinkedList<>();
     
     public KillingFloorServer()
     {
@@ -155,24 +155,14 @@ public class KillingFloorServer extends SourceServer
         this.skillLevel = skillLevel;
     }
 
-    public List<GameInfo> getGameInfo()
+    public List<GameInfo> getGameInfoList()
     {
-        return gameInfo;
+        return gameInfoList;
     }
 
-    public void setGameInfo(List<GameInfo> gameInfo)
+    public List<Player> getPlayerList()
     {
-        this.gameInfo = gameInfo;
-    }
-
-    public List<Player> getPlayers()
-    {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players)
-    {
-        this.players = players;
+        return playerList;
     }
 
     @Override
@@ -194,8 +184,8 @@ public class KillingFloorServer extends SourceServer
         output += ("Ping: " + ping + "\n");
         output += ("Server Flags: " + serverFlags + "\n");
         output += ("Skill Level: " + skillLevel + "\n");
-        output += ("Game Info: " + gameInfo + "\n");
-        output += ("Players: " + players + "\n");
+        output += ("Game Info: " + gameInfoList + "\n");
+        output += ("Players: " + playerList + "\n");
         
         return output;
     }
