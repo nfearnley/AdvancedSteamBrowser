@@ -16,7 +16,7 @@ public class ServerAddress
     {
     }
 
-    ServerAddress(InetAddress address, int port)
+    public ServerAddress(InetAddress address, int port)
     {
         this.address = address;
         this.port = port;
