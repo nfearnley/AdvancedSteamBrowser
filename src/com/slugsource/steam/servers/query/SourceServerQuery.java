@@ -41,7 +41,7 @@ public class SourceServerQuery extends ServerQuery<SourceServer>
     @Override
     protected void readQueryResponse(DatagramSocket socket, SourceServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
-        socket.setSoTimeout(1000);
+        socket.setSoTimeout(300);
 
         byte[] receiveBuffer = new byte[1400];
         DatagramPacket response = new DatagramPacket(receiveBuffer, 1400);
