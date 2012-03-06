@@ -13,7 +13,7 @@ public class Player
     private int id;
     private String name;
     private int ping;
-    private int scote;
+    private int score;
     private int statsId;
 
     public int getId()
@@ -46,14 +46,14 @@ public class Player
         this.ping = ping;
     }
 
-    public int getScote()
+    public int getScore()
     {
-        return scote;
+        return score;
     }
 
-    public void setScote(int scote)
+    public void setScore(int score)
     {
-        this.scote = scote;
+        this.score = score;
     }
 
     public int getStatsId()
@@ -65,5 +65,17 @@ public class Player
     {
         this.statsId = statsId;
     }
-    
+
+    @Override
+    public String toString()
+    {
+        String output = "[";
+        output += "Player: " + name + ", ";
+        output += "ID: " + id + ", ";
+        output += "Ping: " + ping + ", ";
+        output += "Score: " + score + ", ";
+        output += "Stats ID: " + statsId;
+        output += "]";
+        return output;
+    }
 }

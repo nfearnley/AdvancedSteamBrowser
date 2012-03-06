@@ -26,8 +26,7 @@ public class BrowserTest
     {
         try
         {
-            sendRequest(InetAddress.getByName("208.122.48.100"), 28852);
-            sendRequest(InetAddress.getByName("24.93.201.227"), 28852);
+            sendRequest(InetAddress.getByName("68.232.176.139"), 28852);
             sendRequest(InetAddress.getByName("localhost"), 28852);
         } catch (Exception ex)
         {

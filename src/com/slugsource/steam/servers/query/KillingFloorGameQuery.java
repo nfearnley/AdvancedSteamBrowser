@@ -57,7 +57,6 @@ public class KillingFloorGameQuery extends ServerQuery<KillingFloorServer>
 
                 reader.readServer(response, server);
             }
-
         } catch (SocketTimeoutException ex)
         {
             if (gotPacket == false)
