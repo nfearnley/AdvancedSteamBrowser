@@ -9,8 +9,8 @@ import java.net.InetAddress;
 public class ServerAddress
 {
 
-    private InetAddress address;
-    private int port;
+    private volatile InetAddress address;
+    private volatile int port;
 
     public ServerAddress()
     {

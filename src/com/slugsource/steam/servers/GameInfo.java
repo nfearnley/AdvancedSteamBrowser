@@ -7,8 +7,8 @@ package com.slugsource.steam.servers;
 public class GameInfo
 {
 
-    private String name;
-    private String value;
+    private volatile String name;
+    private volatile String value;
 
     public String getName()
     {

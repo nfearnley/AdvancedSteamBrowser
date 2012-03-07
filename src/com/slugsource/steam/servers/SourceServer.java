@@ -9,30 +9,30 @@ import java.net.InetAddress;
 public class SourceServer extends Server
 {
 
-    private ServerAddress serverAddress;
-    private int version;
-    private String serverName;
-    private String map;
-    private String gameDirectory;
-    private String gameDescription;
-    private int appId;
-    private int numberOfPlayers;
-    private int maximumPlayers;
-    private int numberOfBots;
-    private char dedicated;
-    private char operatingSystem;
-    private boolean password;
-    private boolean vacSecured;
-    private String gameVersion;
-    private boolean hasGamePort;
-    private boolean hasSteamId;
-    private boolean hasSpectatorServer;
-    private boolean hasGameTagDataString;
-    private boolean hasGameId;
-    private int gamePort;
-    private long steamId;
-    private int spectatorServerPort;
-    private String spectatorServerName;
+    private volatile ServerAddress serverAddress;
+    private volatile int version;
+    private volatile String serverName;
+    private volatile String map;
+    private volatile String gameDirectory;
+    private volatile String gameDescription;
+    private volatile int appId;
+    private volatile int numberOfPlayers;
+    private volatile int maximumPlayers;
+    private volatile int numberOfBots;
+    private volatile char dedicated;
+    private volatile char operatingSystem;
+    private volatile boolean password;
+    private volatile boolean vacSecured;
+    private volatile String gameVersion;
+    private volatile boolean hasGamePort;
+    private volatile boolean hasSteamId;
+    private volatile boolean hasSpectatorServer;
+    private volatile boolean hasGameTagDataString;
+    private volatile boolean hasGameId;
+    private volatile int gamePort;
+    private volatile long steamId;
+    private volatile int spectatorServerPort;
+    private volatile String spectatorServerName;
     // d;#;#
     // d; ?
     // #; ?

@@ -11,20 +11,20 @@ import java.util.List;
 public class KillingFloorServer extends SourceServer
 {
 
-    private int serverId;
-    private String serverIp;
-    private int gamePort;
-    private int statusQueryPort;
-    private String serverName;
-    private String gameMap;
-    private String gameType;
-    private int numberOfPlayers;
-    private int maximumPlayers;
-    private int ping;
-    private int serverFlags;
-    private String skillLevel;
-    private List<GameInfo> gameInfoList = new LinkedList<>();
-    private List<Player> playerList = new LinkedList<>();
+    private volatile int serverId;
+    private volatile String serverIp;
+    private volatile int gamePort;
+    private volatile int statusQueryPort;
+    private volatile String serverName;
+    private volatile String gameMap;
+    private volatile String gameType;
+    private volatile int numberOfPlayers;
+    private volatile int maximumPlayers;
+    private volatile int ping;
+    private volatile int serverFlags;
+    private volatile String skillLevel;
+    private volatile List<GameInfo> gameInfoList = new LinkedList<>();
+    private volatile List<Player> playerList = new LinkedList<>();
     
     public KillingFloorServer()
     {

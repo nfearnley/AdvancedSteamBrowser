@@ -10,11 +10,11 @@ package com.slugsource.steam.servers;
  */
 public class Player
 {
-    private int id;
-    private String name;
-    private int ping;
-    private int score;
-    private int statsId;
+    private volatile int id;
+    private volatile String name;
+    private volatile int ping;
+    private volatile int score;
+    private volatile int statsId;
 
     public int getId()
     {
