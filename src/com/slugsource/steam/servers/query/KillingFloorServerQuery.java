@@ -4,23 +4,31 @@ import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.KillingFloorServer;
 import com.slugsource.steam.servers.readers.KillingFloorServerReader;
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
  *
  * @author Nathan Fearnley
  */
-public class KillingFloorServerQuery extends ServerQuery<KillingFloorServer>
+public class KillingFloorServerQuery extends ServerQuery
 {
 
-        KillingFloorServerReader reader = new KillingFloorServerReader();
+    private KillingFloorServerReader reader = new KillingFloorServerReader();
+    private KillingFloorServer server;
+    
+    public KillingFloorServerQuery(InetAddress address, int port, KillingFloorServer server)
+    {
+        super(address, port);
+        this.server = server;
+    }
 
     @Override
-    protected DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException
+    protected void sendQueryRequest() throws SocketException, IOException
     {
-        DatagramSocket socket = new DatagramSocket();
-
         byte[] header =
         {
             (byte) 0x80, (byte) 0x00, (byte) 0x00, (byte) 0x00
@@ -34,11 +42,10 @@ public class KillingFloorServerQuery extends ServerQuery<KillingFloorServer>
                 buffer, buffer.length, address, port);
 
         socket.send(request);
-        return socket;
     }
 
     @Override
-    protected void readQueryResponse(DatagramSocket socket, KillingFloorServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    protected void readQueryResponse() throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         socket.setSoTimeout(300);
 

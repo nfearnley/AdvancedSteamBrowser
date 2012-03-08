@@ -5,23 +5,31 @@ import com.slugsource.steam.servers.SourceServer;
 import com.slugsource.steam.servers.readers.SourceServerReader;
 import com.slugsource.steam.string.StringUtils;
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
  *
  * @author Nathan Fearnley
  */
-public class SourceServerQuery extends ServerQuery<SourceServer>
+public class SourceServerQuery extends ServerQuery
 {
 
-    SourceServerReader reader = new SourceServerReader();
+    private SourceServerReader reader = new SourceServerReader();
+    private SourceServer server;
+
+    public SourceServerQuery(InetAddress address, int port, SourceServer server)
+    {
+        super(address, port);
+        this.server = server;
+    }
 
     @Override
-    protected DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException
+    protected void sendQueryRequest() throws SocketException, IOException
     {
-        DatagramSocket socket = new DatagramSocket();
-
         byte[] header =
         {
             (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0xFF, (byte) 0x54
@@ -35,11 +43,10 @@ public class SourceServerQuery extends ServerQuery<SourceServer>
                 buffer, buffer.length, address, port);
 
         socket.send(request);
-        return socket;
     }
 
     @Override
-    protected void readQueryResponse(DatagramSocket socket, SourceServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    protected void readQueryResponse() throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         socket.setSoTimeout(300);
 

@@ -6,6 +6,7 @@ import com.slugsource.steam.servers.readers.MasterServerReader;
 import com.slugsource.steam.string.StringUtils;
 import java.io.IOException;
 import java.net.*;
+import java.util.Collections;
 import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -13,59 +14,58 @@ import org.apache.commons.lang3.ArrayUtils;
  *
  * @author Nathan Fearnley
  */
-public class MasterServerQuery
+public class MasterServerQuery extends ServerQuery
 {
 
-    MasterServerReader reader = new MasterServerReader();
+    private MasterServerReader reader = new MasterServerReader();
+    private List<ServerAddress> serverList;
+    private String filter;
+    private ServerAddress lastAddress;
 
-    public void queryServer(InetAddress address, int port, String filter, List<ServerAddress> serverList) throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    public MasterServerQuery(InetAddress address, int port, String filter, List<ServerAddress> serverList)
     {
-        ServerAddress lastAddress;
-        try
-        {
-            lastAddress = new ServerAddress(InetAddress.getByName("0.0.0.0"), 0);
-        } catch (UnknownHostException ex)
-        {
-            return;
-        }
-
-        do
-        {
-            try (DatagramSocket socket = sendQueryRequest(address, port, lastAddress, filter))
-            {
-                readQueryResponse(socket, serverList);
-            }
-        } while (!lastAddress.getAddress().equals(InetAddress.getByName("0.0.0.0")));
+        super(address, port);
+        this.filter = filter;
+        this.serverList = Collections.synchronizedList(serverList);
     }
 
-    private DatagramSocket sendQueryRequest(InetAddress address, int port, ServerAddress lastAddress, String filter) throws SocketException, IOException
+    @Override
+    public void queryServer() throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
-        DatagramSocket socket = new DatagramSocket();
+        try (DatagramSocket socket = new DatagramSocket())
+        {
+            this.socket = socket;
+            do
+            {
+                sendQueryRequest();
+                readQueryResponse();
+            } while (!lastAddress.equals(ServerAddress.getZeroAddress()));
+        }
+    }
 
+    @Override
+    protected void sendQueryRequest() throws SocketException, IOException
+    {
         byte[] header =
         {
             (byte) 0x31, (byte) 0xFF
         };
 
-        
-        String lastAddressIP = lastAddress.getAddress().getHostAddress();
-        String lastAddressPort = Integer.toString(lastAddress.getPort());
-        String lastAddressString = lastAddressIP + ":" + lastAddressPort;
-        byte[] lastAddressBytes = StringUtils.getNullTerminatedString(lastAddressString);
-        
+        byte[] lastAddressBytes = StringUtils.getNullTerminatedString(lastAddress.toString());
+
         byte[] filterBytes = StringUtils.getNullTerminatedString(filter);
 
         byte[] buffer = ArrayUtils.addAll(header, lastAddressBytes);
         buffer = ArrayUtils.addAll(buffer, filterBytes);
-        
+
         DatagramPacket request = new DatagramPacket(
                 buffer, buffer.length, address, port);
 
         socket.send(request);
-        return socket;
     }
 
-    private void readQueryResponse(DatagramSocket socket, List<ServerAddress> serverList) throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    @Override
+    protected void readQueryResponse() throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         socket.setSoTimeout(1000);
 

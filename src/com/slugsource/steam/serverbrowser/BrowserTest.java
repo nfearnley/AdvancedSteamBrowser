@@ -9,9 +9,12 @@ import com.slugsource.steam.servers.query.MasterServerQuery;
 import com.slugsource.steam.servers.query.SourceServerQuery;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -20,12 +23,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class BrowserTest
 {
-
-    private static SourceServerQuery srcQuery = new SourceServerQuery();
-    private static KillingFloorServerQuery kfServerQuery = new KillingFloorServerQuery();
-    private static KillingFloorGameQuery kfGameQuery = new KillingFloorGameQuery();
-    private static KillingFloorPlayerQuery kfPlayerQuery = new KillingFloorPlayerQuery();
-    private static MasterServerQuery mQuery = new MasterServerQuery();
 
     public static void main(String[] args)
     {
@@ -39,57 +36,39 @@ public class BrowserTest
             ex.printStackTrace();
         }
     }
-    
+
     private static void sendMasterRequest(InetAddress address, int port) throws IOException
     {
-        try
-        {
-            String header = "Server " + address.getHostAddress() + ":" + port;
-            header += '\n' + StringUtils.repeat('=', header.length());
-            System.out.println(header);
+        String header = "Server " + address.getHostAddress() + ":" + port;
+        header += '\n' + StringUtils.repeat('=', header.length());
+        System.out.println(header);
 
-            List<ServerAddress> serverList = new LinkedList<>();
+        List<ServerAddress> serverList = new LinkedList<>();
+        
+        Executor exec = Executors.newFixedThreadPool(5);
 
-            mQuery.queryServer(address, port, "", serverList);
+        MasterServerQuery mQuery = new MasterServerQuery(address, port, "", serverList);
+        exec.execute(mQuery);
 
-            System.out.println(serverList);
-        } catch (SocketTimeoutException ex)
-        {
-            System.out.println("Could not contact server");
-        } catch (NotAServerException ex)
-        {
-            System.out.println("Response was not a server description");
-        } finally
-        {
-            System.out.println();
-        }
+        System.out.println(serverList);
+        System.out.println();
     }
 
     private static void sendRequest(InetAddress address, int port) throws IOException
     {
-        try
-        {
-            String header = "Server " + address.getHostAddress() + ":" + port;
-            header += '\n' + StringUtils.repeat('=', header.length());
-            System.out.println(header);
+        String header = "Server " + address.getHostAddress() + ":" + port;
+        header += '\n' + StringUtils.repeat('=', header.length());
+        System.out.println(header);
 
-            KillingFloorServer server = new KillingFloorServer(address, port);
-
-            srcQuery.queryServer(address, port, server);
-            kfServerQuery.queryServer(address, server.getGamePort() + 1, server);
-            kfGameQuery.queryServer(address, server.getGamePort() + 1, server);
-            kfPlayerQuery.queryServer(address, server.getGamePort() + 1, server);
-
-            System.out.println(server);
-        } catch (SocketTimeoutException ex)
-        {
-            System.out.println("Could not contact server");
-        } catch (NotAServerException ex)
-        {
-            System.out.println("Response was not a server description");
-        } finally
-        {
-            System.out.println();
-        }
+        KillingFloorServer server = new KillingFloorServer(address, port);
+        
+        Executor exec = Executors.newFixedThreadPool(5);
+        
+        exec.execute(new SourceServerQuery(address, port, server));
+        exec.execute(new KillingFloorServerQuery(address, server.getGamePort() + 1, server));
+        exec.execute(new KillingFloorGameQuery(address, server.getGamePort() + 1, server));
+        exec.execute(new KillingFloorPlayerQuery(address, server.getGamePort() + 1, server));
+        
+        System.out.println();
     }
 }

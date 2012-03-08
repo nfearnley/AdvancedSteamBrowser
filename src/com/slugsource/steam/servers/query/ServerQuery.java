@@ -1,7 +1,6 @@
 package com.slugsource.steam.servers.query;
 
 import com.slugsource.steam.serverbrowser.NotAServerException;
-import com.slugsource.steam.servers.Server;
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -12,18 +11,41 @@ import java.net.SocketTimeoutException;
  *
  * @author Nathan Fearnley
  */
-public abstract class ServerQuery<T extends Server>
+public abstract class ServerQuery implements Runnable
 {
-
-    public void queryServer(InetAddress address, int port, T server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    protected InetAddress address;
+    protected int port;
+    protected DatagramSocket socket;
+    
+    public ServerQuery(InetAddress address, int port)
     {
-        try (DatagramSocket socket = sendQueryRequest(address, port))
+        this.address = address;
+        this.port = port;
+    }
+
+    @Override
+    public void run()
+    {
+        try
         {
-            readQueryResponse(socket, server);
+            queryServer();
+        } catch (Exception ex)
+        {
+            // Todo: Put something useful here
         }
     }
 
-    protected abstract DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException;
+    public void queryServer() throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    {
+        try (DatagramSocket socket = new DatagramSocket())
+        {
+            this.socket = socket;
+            sendQueryRequest();
+            readQueryResponse();
+        }
+    }
 
-    protected abstract void readQueryResponse(DatagramSocket socket, T server) throws NotAServerException, SocketTimeoutException, SocketException, IOException;
+    protected abstract void sendQueryRequest() throws SocketException, IOException;
+
+    protected abstract void readQueryResponse() throws NotAServerException, SocketTimeoutException, SocketException, IOException;
 }

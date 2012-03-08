@@ -4,23 +4,31 @@ import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.KillingFloorServer;
 import com.slugsource.steam.servers.readers.KillingFloorPlayerReader;
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
  *
  * @author Nathan Fearnley
  */
-public class KillingFloorPlayerQuery extends ServerQuery<KillingFloorServer>
+public class KillingFloorPlayerQuery extends ServerQuery
 {
 
-    KillingFloorPlayerReader reader = new KillingFloorPlayerReader();
+    private KillingFloorPlayerReader reader = new KillingFloorPlayerReader();
+    private KillingFloorServer server;
+    
+    public KillingFloorPlayerQuery(InetAddress address, int port, KillingFloorServer server)
+    {
+        super(address, port);
+        this.server = server;
+    }
 
     @Override
-    protected DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException
+    protected void sendQueryRequest() throws SocketException, IOException
     {
-        DatagramSocket socket = new DatagramSocket();
-
         byte[] header =
         {
             (byte) 0x80, (byte) 0x00, (byte) 0x00, (byte) 0x00
@@ -34,11 +42,10 @@ public class KillingFloorPlayerQuery extends ServerQuery<KillingFloorServer>
                 buffer, buffer.length, address, port);
 
         socket.send(request);
-        return socket;
     }
 
     @Override
-    protected void readQueryResponse(DatagramSocket socket, KillingFloorServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    protected void readQueryResponse() throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         socket.setSoTimeout(300);
 
@@ -53,18 +60,10 @@ public class KillingFloorPlayerQuery extends ServerQuery<KillingFloorServer>
             {
                 socket.receive(response);
 
-                gotPacket = true;
-
                 reader.readServer(response, server);
             }
         } catch (SocketTimeoutException ex)
         {
-            /*
-            if (gotPacket == false)
-            {
-                throw ex;
-            }
-            */
         }
 
     }

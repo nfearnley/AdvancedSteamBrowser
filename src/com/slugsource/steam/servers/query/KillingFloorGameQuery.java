@@ -4,22 +4,31 @@ import com.slugsource.steam.serverbrowser.NotAServerException;
 import com.slugsource.steam.servers.KillingFloorServer;
 import com.slugsource.steam.servers.readers.KillingFloorGameReader;
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import org.apache.commons.lang3.ArrayUtils;
 
 /**
  *
  * @author Nathan Fearnley
  */
-public class KillingFloorGameQuery extends ServerQuery<KillingFloorServer>
+public class KillingFloorGameQuery extends ServerQuery
 {
 
-    KillingFloorGameReader reader = new KillingFloorGameReader();
+    private KillingFloorGameReader reader = new KillingFloorGameReader();
+    private KillingFloorServer server;
+    
+    public KillingFloorGameQuery(InetAddress address, int port, KillingFloorServer server)
+    {
+        super(address, port);
+        this.server = server;
+    }
 
     @Override
-    protected DatagramSocket sendQueryRequest(InetAddress address, int port) throws SocketException, IOException
+    protected void sendQueryRequest() throws SocketException, IOException
     {
-        DatagramSocket socket = new DatagramSocket();
 
         byte[] header =
         {
@@ -34,18 +43,15 @@ public class KillingFloorGameQuery extends ServerQuery<KillingFloorServer>
                 buffer, buffer.length, address, port);
 
         socket.send(request);
-        return socket;
     }
 
     @Override
-    protected void readQueryResponse(DatagramSocket socket, KillingFloorServer server) throws NotAServerException, SocketTimeoutException, SocketException, IOException
+    protected void readQueryResponse() throws NotAServerException, SocketTimeoutException, SocketException, IOException
     {
         socket.setSoTimeout(300);
 
         byte[] receiveBuffer = new byte[1400];
         DatagramPacket response = new DatagramPacket(receiveBuffer, 1400);
-
-        boolean gotPacket = false;
 
         try
         {
@@ -53,16 +59,10 @@ public class KillingFloorGameQuery extends ServerQuery<KillingFloorServer>
             {
                 socket.receive(response);
 
-                gotPacket = true;
-
                 reader.readServer(response, server);
             }
         } catch (SocketTimeoutException ex)
         {
-            if (gotPacket == false)
-            {
-                throw ex;
-            }
         }
     }
 }
