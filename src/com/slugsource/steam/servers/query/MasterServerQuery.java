@@ -20,7 +20,7 @@ public class MasterServerQuery extends ServerQuery
     private MasterServerReader reader = new MasterServerReader();
     private List<ServerAddress> serverList;
     private String filter;
-    private ServerAddress lastAddress;
+    private ServerAddress lastAddress = ServerAddress.getZeroAddress();
 
     public MasterServerQuery(InetAddress address, int port, String filter, List<ServerAddress> serverList)
     {
@@ -40,6 +40,7 @@ public class MasterServerQuery extends ServerQuery
                 sendQueryRequest();
                 readQueryResponse();
             } while (!lastAddress.equals(ServerAddress.getZeroAddress()));
+            serverList.remove(serverList.size() - 1);
         }
     }
 
@@ -75,5 +76,7 @@ public class MasterServerQuery extends ServerQuery
         socket.receive(response);
 
         reader.readServer(response, serverList);
+
+        lastAddress = serverList.get(serverList.size()-1);
     }
 }
