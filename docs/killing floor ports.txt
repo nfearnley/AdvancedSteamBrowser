@@ -1,0 +1,13 @@
+7707 (+0) UDP/IP (Game Port)
+7708 (+1) UDP/IP (Query Port)
+7717 (+10) UDP/IP (GameSpy Query Port)
+7718 (+11) ?
+10707 (Fixed) ?
+20560 (+12853) UDP/IP (Steam Port)
+28852 (+21145) TCP/IP and UDP (Allows your Server to Connect to the Master Server Browser)
+
+
+8075 (Fixed) TCP/IP (Port set via ListenPort that your WebAdmin will run on)
+
+All ports are based around 7707
+If main port is moved up by one, all ports move up by one
