@@ -29,8 +29,8 @@ public class BrowserTest
         try
         {
             sendMasterRequest(InetAddress.getByName("208.64.200.52"), 27011);
-//            sendRequest(InetAddress.getByName("68.232.176.139"), 28852);
-//            sendRequest(InetAddress.getByName("localhost"), 28852);
+            sendRequest(InetAddress.getByName("68.232.176.139"), 28852);
+            sendRequest(InetAddress.getByName("localhost"), 28852);
         } catch (Exception ex)
         {
             ex.printStackTrace();
@@ -65,9 +65,9 @@ public class BrowserTest
         Executor exec = Executors.newFixedThreadPool(5);
         
         exec.execute(new SourceServerQuery(address, port, server));
-        exec.execute(new KillingFloorServerQuery(address, server.getGamePort() + 1, server));
-        exec.execute(new KillingFloorGameQuery(address, server.getGamePort() + 1, server));
-        exec.execute(new KillingFloorPlayerQuery(address, server.getGamePort() + 1, server));
+        exec.execute(new KillingFloorServerQuery(address, server.getKFQueryPort(), server));
+        exec.execute(new KillingFloorGameQuery(address, server.getKFQueryPort(), server));
+        exec.execute(new KillingFloorPlayerQuery(address, server.getKFQueryPort(), server));
         
         System.out.println();
     }

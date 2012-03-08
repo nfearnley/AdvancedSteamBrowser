@@ -55,6 +55,11 @@ public class KillingFloorServer extends SourceServer
         this.serverIp = serverIp;
     }
 
+    public int getKFQueryPort()
+    {
+        return this.getServerAddress().getPort() - 21144;
+    }
+    
     public int getKFGamePort()
     {
         return gamePort;

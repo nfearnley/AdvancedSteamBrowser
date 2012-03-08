@@ -159,9 +159,9 @@ public class BrowserGUI extends javax.swing.JFrame
         server = new KillingFloorServer(address, port);
 
         SourceServerQuery srcQuery = new SourceServerQuery(address, port, server);
-        KillingFloorServerQuery kfServerQuery = new KillingFloorServerQuery(address, server.getGamePort() + 1, server);
-        KillingFloorGameQuery kfGameQuery = new KillingFloorGameQuery(address, server.getGamePort() + 1, server);
-        KillingFloorPlayerQuery kfPlayerQuery = new KillingFloorPlayerQuery(address, server.getGamePort() + 1, server);
+        KillingFloorServerQuery kfServerQuery = new KillingFloorServerQuery(address, server.getKFQueryPort(), server);
+        KillingFloorGameQuery kfGameQuery = new KillingFloorGameQuery(address, server.getKFQueryPort(), server);
+        KillingFloorPlayerQuery kfPlayerQuery = new KillingFloorPlayerQuery(address, server.getKFQueryPort(), server);
         
         Executor exec = Executors.newFixedThreadPool(4);
         exec.execute(srcQuery);
